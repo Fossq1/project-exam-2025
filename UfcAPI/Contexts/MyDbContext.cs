@@ -12,11 +12,12 @@ public interface IMyDbContext
 
 public class MyDbContext(DbContextOptions<MyDbContext> options) : DbContext(options), IMyDbContext
 {
-    // ALLE TABELLER OPPRETTES HER, IKKE BARE VENUE- KJØR dotnet ef migrations add AddNewTable ETTERFULGT AV dotnet ef database update
+    // ALLE TABELLER OPPRETTES HER, IKKE BARE VENUE- KJØR dotnet ef migrations add *navnPåMigration* ETTERFULGT AV dotnet ef database update
 
     public DbSet<Models.Venue> Venues { get; set; }
 
     public DbSet<Models.Athlete> Athletes { get; set; }
 
     public DbSet<Models.Finance> Finances { get; set; }
+
 }
