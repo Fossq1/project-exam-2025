@@ -3,14 +3,14 @@ using UfcAPI.Models;
 
 namespace UfcAPI.Contexts;
 
-public interface IVenuesContext
+public interface IMyDbContext
 {
     DbSet<Venue> Venues { get; set; }
     DbSet<Athlete> Athletes { get; set; }
     DbSet<Finance> Finances { get; set; }
 }
 
-public class VenuesContext(DbContextOptions<VenuesContext> options) : DbContext(options), IVenuesContext
+public class MyDbContext(DbContextOptions<MyDbContext> options) : DbContext(options), IMyDbContext
 {
     // ALLE TABELLER OPPRETTES HER, IKKE BARE VENUE- KJØR dotnet ef migrations add AddNewTable ETTERFULGT AV dotnet ef database update
 

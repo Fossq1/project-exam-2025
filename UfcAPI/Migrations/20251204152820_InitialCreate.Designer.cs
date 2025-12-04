@@ -9,9 +9,9 @@ using UfcAPI.Contexts;
 
 namespace UfcAPI.Migrations
 {
-    [DbContext(typeof(VenuesContext))]
-    [Migration("20251204145542_AddedFinanceTable")]
-    partial class AddedFinanceTable
+    [DbContext(typeof(MyDbContext))]
+    [Migration("20251204152820_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

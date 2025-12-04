@@ -8,8 +8,8 @@ using UfcAPI.Contexts;
 
 namespace UfcAPI.Migrations
 {
-    [DbContext(typeof(VenuesContext))]
-    partial class VenuesContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(MyDbContext))]
+    partial class MyDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

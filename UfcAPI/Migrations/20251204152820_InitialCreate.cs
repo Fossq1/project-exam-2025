@@ -28,6 +28,21 @@ namespace UfcAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Finances",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    MoneyLeft = table.Column<int>(type: "INTEGER", nullable: false),
+                    NumberOfPurchases = table.Column<int>(type: "INTEGER", nullable: false),
+                    MoneySpent = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Finances", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Venues",
                 columns: table => new
                 {
@@ -48,6 +63,9 @@ namespace UfcAPI.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Athletes");
+
+            migrationBuilder.DropTable(
+                name: "Finances");
 
             migrationBuilder.DropTable(
                 name: "Venues");
