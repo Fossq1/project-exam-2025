@@ -1,0 +1,6 @@
+@UfcAPI_HostAddress = http://localhost:5177
+
+GET {{UfcAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
