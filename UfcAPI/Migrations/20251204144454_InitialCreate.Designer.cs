@@ -10,7 +10,7 @@ using UfcAPI.Contexts;
 namespace UfcAPI.Migrations
 {
     [DbContext(typeof(VenuesContext))]
-    [Migration("20251204115010_InitialCreate")]
+    [Migration("20251204144454_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -18,6 +18,35 @@ namespace UfcAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.11");
+
+            modelBuilder.Entity("UfcAPI.Models.Athlete", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Gender")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("PurchaseStatus")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Athletes");
+                });
 
             modelBuilder.Entity("UfcAPI.Models.Venue", b =>
                 {
