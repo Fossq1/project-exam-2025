@@ -9,14 +9,14 @@ namespace UfcAPI.Controllers;
 [ApiController]
 [Route("[controller]")]
 
-public class VenueController(VenuesContext venuesContext) : ControllerBase
+public class VenueController(MyDbContext MyDbContext) : ControllerBase
 {
     [HttpGet]
     public async Task <ActionResult<List<Venue>>> Get()
     {
         try
         {
-            List<Venue> venues = await venuesContext.Venues.ToListAsync();
+            List<Venue> venues = await MyDbContext.Venues.ToListAsync();
             return venues;
         }
         catch (DbException)

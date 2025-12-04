@@ -4,7 +4,7 @@ using UfcAPI.Contexts;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<VenuesContext>(
+builder.Services.AddDbContext<MyDbContext>(
     options => options.UseSqlite("Data Source = Databases/SportsWorld.db")
 );
 builder.Services.AddControllers();
