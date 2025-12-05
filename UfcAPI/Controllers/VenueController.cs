@@ -1,6 +1,4 @@
 using System.Data.Common;
-using System.Reflection;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UfcAPI.Contexts;
@@ -55,6 +53,32 @@ public class VenueController(MyDbContext _myDbContext) : ControllerBase
         }
 
     }
+
+   /* [HttpGet("search/{name}")]
+    public async Task<ActionResult<Venue>> Get(string name)
+    {
+        try
+        {
+                // lar ikke bruker søke etter tomt navn
+            if (string.IsNullOrWhiteSpace(name))
+                return BadRequest("Search cant be empty");
+            
+            // søker etter 
+            var venues = await _myDbContext.Venues
+                .Where(venue => EF.Functions.Like(venue.Name.ToLower(), $"%{name.ToLower()}%"))
+                .ToListAsync();
+            
+            if (venues.Count > 0)
+                return Ok(venues);
+            else
+                // returnerer en tom liste i stedet for en 404
+                return Ok(new List<Venue>());
+        }
+        catch
+        {
+            return StatusCode(500);
+        }
+    } */
 
 
     [HttpPost]
