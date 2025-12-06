@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using UfcAPI.Models;
+using SportsworldAPI.Models;
 
-namespace UfcAPI.Contexts;
+namespace SportsworldAPI.Contexts;
 
 public interface IMyDbContext
 {

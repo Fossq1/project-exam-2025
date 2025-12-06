@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using UfcAPI.Contexts;
+using SportsworldAPI.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
 

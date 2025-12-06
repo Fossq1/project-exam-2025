@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using UfcAPI.Models;
-using UfcAPI.Contexts;
+using SportsworldAPI.Models;
+using SportsworldAPI.Contexts;
 using Microsoft.EntityFrameworkCore;
 
-namespace UfcAPI.Controllers;
+namespace SportsworldAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]

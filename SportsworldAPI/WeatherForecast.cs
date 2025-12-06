@@ -1,4 +1,4 @@
-namespace UfcAPI;
+namespace SportsworldAPI;
 
 public class WeatherForecast
 {

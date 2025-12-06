@@ -1,4 +1,4 @@
-namespace UfcAPI.Interfaces;
+namespace SportsworldAPI.Interfaces;
 
 interface IFinance
 {

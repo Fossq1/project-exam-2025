@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using UfcAPI.Interfaces;
+using SportsworldAPI.Interfaces;
 
-namespace UfcAPI.Models;
+namespace SportsworldAPI.Models;
 
 public class Finance : IFinance
 {

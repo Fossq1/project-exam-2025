@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace UfcAPI.Migrations
+namespace SportsworldAPI.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

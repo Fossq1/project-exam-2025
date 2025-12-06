@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace UfcAPI.Controllers;
+namespace SportsworldAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
