@@ -1,13 +1,14 @@
 import axios from "axios";
 import { type IAthlete } from "../interfaces/IAthlete";
 import type {
-  IDefaultResponse,
   IAthleteResponse,
+  IDefaultResponse,
+  IAthletesResponse,
 } from "../interfaces/IResponseInterface";
 
 const endpoint = "http://localhost:5177/athlete";
 
-const getAllAthletes = async (): Promise<IAthleteResponse> => {
+const getAllAthletes = async (): Promise<IAthletesResponse> => {
   try {
     const response = await axios.get(endpoint);
     return {
