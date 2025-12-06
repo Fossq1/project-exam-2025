@@ -2,7 +2,6 @@
 import VenueQuantity from "../components/venues/VenueQuantity";
 import VenueList from "../components/venues/VenueList";
 
-
 const VenuePage = () => {
     return(
         <>
