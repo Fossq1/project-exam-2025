@@ -12,7 +12,7 @@ interface Props { children: ReactNode }
 export const VenueProvider = ({children} : Props ) => {
 
         const [venues, setVenues] = useState<IVenue[]>([
-            {id: 99, name: "Lund", capacity: 20, image:''}
+            {id: 99, name: "Venue from context", capacity: 20, image:''}
         ])
 
         useEffect( () => {
