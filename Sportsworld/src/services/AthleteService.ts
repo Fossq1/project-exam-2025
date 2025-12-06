@@ -66,4 +66,24 @@ const getAthleteById = async (id: number): Promise<IAthleteResponse> => {
   }
 };
 
-export default { getAllAthletes, postAthlete, deleteAthlete, getAthleteById };
+const insertAthlete = async (athlete: IAthlete): Promise<IDefaultResponse> => {
+  try {
+    const response = await axios.post(endpoint, athlete);
+    console.log(response);
+    return {
+      success: true,
+    };
+  } catch {
+    return {
+      success: false,
+    };
+  }
+};
+
+export default {
+  getAllAthletes,
+  postAthlete,
+  deleteAthlete,
+  getAthleteById,
+  insertAthlete,
+};
