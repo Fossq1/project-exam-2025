@@ -3,6 +3,18 @@ using SportsworldAPI.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(
+    options =>
+    {
+        options.AddPolicy("AllowAnyOrigin",
+        policies => policies
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+        );
+    }
+);
+
 // Add services to the container.
 builder.Services.AddDbContext<MyDbContext>(
     options => options.UseSqlite("Data Source = Databases/SportsWorld.db")
@@ -12,6 +24,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
+app.UseCors("AllowAnyOrigin");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

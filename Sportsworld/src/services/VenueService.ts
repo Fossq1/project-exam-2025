@@ -18,4 +18,4 @@ const getAllVenues = async () => {
 }
 
 
-export { getAllVenues }
+export default { getAllVenues }
