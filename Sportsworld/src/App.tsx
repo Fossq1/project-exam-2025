@@ -1,16 +1,15 @@
-import { useState } from 'react'
-import VenueList from './components/venues/VenueList'
+import { useState } from "react";
+import VenueList from "./components/venues/VenueList";
 
-import './App.css'
-import AppRouting from './routing/AppRouting'
+import "./App.css";
+import AppRouting from "./routing/AppRouting";
 
 function App() {
-
   return (
     <>
-     <AppRouting />
+      <AppRouting />
     </>
-  )
+  );
 }
 
-export default App
+export default App();
