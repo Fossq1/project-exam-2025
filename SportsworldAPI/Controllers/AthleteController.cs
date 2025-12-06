@@ -23,6 +23,29 @@ public class AthleteController (MyDbContext _myDbContext) : ControllerBase
         }
     }
 
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Athlete>> Get(int id)
+    {
+        try
+        {
+            Athlete? athlete = await _myDbContext.Athletes.FindAsync(id);
+
+            if (athlete != null)
+            {
+                return Ok(athlete);
+            }
+            else
+            {
+                return NotFound("Could not find an athlete with that Id");
+            }   
+        }
+        catch
+        {
+            return StatusCode(500);
+        }
+
+    }
+
     [HttpPost]
     public async Task<ActionResult<Athlete>> Post(Athlete athlete)
     {
