@@ -12,7 +12,6 @@ export interface IAthleteResponse {
 }
 
 
-
 export interface IVenuesResponse {
   success: boolean;
   data: IVenue[] | null;
