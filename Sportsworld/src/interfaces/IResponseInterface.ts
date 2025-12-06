@@ -10,7 +10,6 @@ export interface IAthleteResponse {
   data: IAthlete[] | null;
 }
 
-
 export interface IVenuesResponse {
   success: boolean;
   data: IVenue[] | null;
