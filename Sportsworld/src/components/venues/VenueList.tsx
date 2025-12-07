@@ -24,7 +24,7 @@ const {venues} = useContext(VenueContext) as IVenueContext;
     return(
         <section>
             <header>
-                <h2>VenueList</h2>
+                <h2>List of all venues</h2>
             </header>
             <section>
                 {getVenueJSX()}

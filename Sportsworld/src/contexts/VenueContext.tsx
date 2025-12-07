@@ -3,7 +3,6 @@ import { useState, createContext, type ReactNode, useEffect } from "react";
 import type { IVenueContext } from "../interfaces/IVenueContext";
 import VenueService from "../services/VenueService"
 import type { IVenue } from "../interfaces/IVenue";
-import type { IDefaultResponse } from "../interfaces/IResponseInterface";
 
 export const VenueContext = createContext<IVenueContext | null>(null);
 
