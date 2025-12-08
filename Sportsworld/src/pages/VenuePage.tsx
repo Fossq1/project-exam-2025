@@ -9,8 +9,8 @@ const VenuePage = () => {
             <header>
                 <h1>Venues</h1>
             </header>
-            <VenueList/>
             <VenueQuantity/>
+            <VenueList/>
         </>
     )
 }
