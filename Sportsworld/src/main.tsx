@@ -9,7 +9,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <FinanceProvider>
     <VenueProvider>
-      <App />
+      <App/>
     </VenueProvider>
     </FinanceProvider>
   </StrictMode>,
