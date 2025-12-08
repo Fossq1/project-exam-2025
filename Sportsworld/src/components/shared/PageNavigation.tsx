@@ -9,7 +9,6 @@ const PageNavigation = () => {
                 <li className="hover:underline"><Link to="venues">Venues</Link></li>
                 <li className="hover:underline"><Link to="athletes">Athletes</Link></li>
                 <li><Link to="finance">Finance</Link></li>
-                
             </ul>
         </nav>
     )

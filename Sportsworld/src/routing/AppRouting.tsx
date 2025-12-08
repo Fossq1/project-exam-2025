@@ -1,8 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HomePage, VenuePage } from "../pages";
+import { HomePage, VenuePage, AthletePage } from "../pages";
 import PageNavigation from "../components/shared/PageNavigation";
-import AthletePage from "../pages/AthletePage";
 import FinancePage from "../pages/FinancePage";
+
+
+
 
 const AppRouting = () => {
   return (
@@ -13,9 +15,13 @@ const AppRouting = () => {
         <Route path="/venues" element={<VenuePage />} />
         <Route path="/athletes" element={<AthletePage />} />
                 <Route path='/finance' element={<FinancePage/>}/>
-      </Routes>
-    </BrowserRouter>
-  );
+                <Route path="/athletes" element={<AthletePage />} />
+
+
+            </Routes>
+        </BrowserRouter>
+    );
 };
 
 export default AppRouting;
+
