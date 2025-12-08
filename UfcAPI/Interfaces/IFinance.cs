@@ -3,7 +3,7 @@ namespace UfcAPI.Interfaces;
 interface IFinance
 {
     int Id { get; set; }
-    int MoneyLeft { get; set; }
+    double MoneyLeft { get; set; }
     int NumberOfPurchases { get; set; }
-    int MoneySpent { get; set; }
+    double MoneySpent { get; set; }
 }
