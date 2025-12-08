@@ -32,8 +32,19 @@ export const AthleteProvider = ({ children }: Props) => {
   ): Promise<IDefaultResponse> => {
     const response = await AthleteService.postAthlete(newAthlete);
     if (response.success) {
-      setAthletes((prev) => [newAthlete, ...athletes]);
+      setAthletes((prev) => [newAthlete, ...prev]);
     }
     return response;
   };
+  return (
+    <AthleteContext.Provider
+      value={{
+        athletes,
+        getAthleteQuantity,
+        saveAthlete,
+      }}
+    >
+      {children}
+    </AthleteContext.Provider>
+  );
 };
