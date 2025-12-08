@@ -7,7 +7,7 @@ import { VenueProvider } from './contexts/VenueContext.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <VenueProvider>
-      <App />
+      <App/>
     </VenueProvider>
   </StrictMode>,
 )
