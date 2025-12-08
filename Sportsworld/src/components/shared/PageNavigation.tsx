@@ -14,10 +14,9 @@ const PageNavigation = () => {
           <Link to="athletes">Athletes</Link>
         </li>
                 <li><Link to="finance">Finance</Link></li>
-                
-      </ul>
-    </nav>
-  );
-};
+            </ul>
+        </nav>
+    )
+}
 
 export default PageNavigation;
