@@ -2,10 +2,11 @@ import { Link } from "react-router-dom";
 
 const PageNavigation = () => {
     return(
+       
         <nav>
-            <ul>
-                <li><Link to="/">Hjem</Link></li>
-                <li><Link to="venues">Venues</Link></li>
+            <ul className="list-disc pl-6">
+                <li className="hover:underline"><Link to="/">Hjem</Link></li>
+                <li className="hover:underline"><Link to="venues">Venues</Link></li>
                 <li><Link to="finance">Finance</Link></li>
                 
             </ul>
