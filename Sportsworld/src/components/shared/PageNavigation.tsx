@@ -7,6 +7,7 @@ const PageNavigation = () => {
             <ul className="list-disc pl-6">
                 <li className="hover:underline"><Link to="/">Hjem</Link></li>
                 <li className="hover:underline"><Link to="venues">Venues</Link></li>
+                <li className="hover:underline"><Link to="athletes">Athletes</Link></li>
             </ul>
         </nav>
     )

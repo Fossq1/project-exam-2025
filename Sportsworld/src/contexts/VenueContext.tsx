@@ -10,6 +10,7 @@ interface Props {
   children: ReactNode;
 }
 
+
 export const VenueProvider = ({children} : Props ) => {
 
         const [venues, setVenues] = useState<IVenue[]>([
@@ -46,4 +47,4 @@ export const VenueProvider = ({children} : Props ) => {
       {children}
     </VenueContext.Provider>
   );
-}};
+};
