@@ -1,16 +1,19 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import "./index.css";
-import App from "./App.tsx";
-import { VenueProvider } from "./contexts/VenueContext.tsx";
-import { AthleteProvider } from "./contexts/AthleteContext.tsx";
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.tsx'
+import { VenueProvider } from './contexts/VenueContext.tsx'
+import { FinanceProvider } from './contexts/FinanceContext.tsx'
+import { AthleteProvider } from './contexts/AthleteContext.tsx'
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
+    <FinanceProvider>
     <VenueProvider>
       <AthleteProvider>
         <App />
       </AthleteProvider>
     </VenueProvider>
-  </StrictMode>
-);
+  </FinanceProvider>
+  </StrictMode>,
+)
