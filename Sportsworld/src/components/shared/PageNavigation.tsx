@@ -6,6 +6,8 @@ const PageNavigation = () => {
             <ul>
                 <li><Link to="/">Hjem</Link></li>
                 <li><Link to="venues">Venues</Link></li>
+                <li><Link to="finance">Finance</Link></li>
+                
             </ul>
         </nav>
     )

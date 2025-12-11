@@ -2,31 +2,29 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 using SportsworldAPI.Models;
+using SportsworldAPI.Contexts;
+
 
 namespace SportsworldAPI.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class FinanceController(MyDbContext _myDbContext) : ControllerBase
 {
     //getAll
     [HttpGet]
-    public async Task<ActionREsult<List<Finance>>> Get()
+    public async Task<ActionResult<List<Finance>>> Get()
     {
         try
         {
-            List<Finance> finances = await _myDbContext.Finances.FindSync(id);
-
-            if (finances != null)
-            {
-                return Ok(finances);
-            }
+            List<Finance> finances = await _myDbContext.Finances.ToListAsync();
+            return Ok(finances);
         }
         catch (DbException)
         {
-            return NotFound("Database Exception");
+            return StatusCode(500, "Database Exception");
         }
-        catch
+        catch (Exception)
         {
             return NotFound("Server side Exception");
         }
@@ -34,53 +32,87 @@ public class FinanceController(MyDbContext _myDbContext) : ControllerBase
 
     //getById
     [HttpGet("{id}")]
-    public ActionResult<Finance> Get(int id)
+    public async Task<ActionResult<Finance>> Get(int id)
     {
         try
         {
-            Finance? chosenBusinessFinance = finances.Find(finance => finance.Id == id);
-            if (chosenBusinessFinance != null)
+            Finance? chosenBusinessFinance = await _myDbContext.Finances.FindAsync(id);
+            if (chosenBusinessFinance == null)
             {
-                return Ok(chosenBusinessFinance);
+                return NotFound();
             }
+            return Ok(chosenBusinessFinance);
         }
         catch (DbException)
         {
-            return NotFound("Database Exception");
-
+            return StatusCode(500, "Database Exception");
+        }
+        catch
+        {
+            return StatusCode(500, "Server Exception");
         }
 
     }
-    [HttpPut]
-    public async Task<ActionResult> Put(Finance editedFinance)
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult> Put( int id, Finance editedFinance)
     {
         try
         {
             _myDbContext.Entry(editedFinance).State = EntityState.Modified;
             await _myDbContext.SaveChangesAsync();
+
             return NoContent();
         }
         catch (DbException)
         {
-            return ("500", "Database Exception");
+            return StatusCode(500, "Database Exception");
         }
-        catch (Exception)
+        catch 
         {
-            return ("500", "Server Exception");
+            return StatusCode(500, "Server Exception");
         }
     }
-    [HttoPost]
+
+    [HttpPost]
     public async Task<ActionResult<Finance>> Post(Finance newFinance)
     {
         try
         {
-            _myDbContext.finances.Add(newFinance);
+            _myDbContext.Finances.Add(newFinance);
             await _myDbContext.SaveChangesAsync();
-            return CreateAtAction("Get", new { id = newFinance.Id }, newFinance);
+            return Created();
         }
         catch (DbException)
         {
-            return NotFound();
+            return StatusCode(500, "Database error");
+        }
+        catch
+        {
+            return StatusCode(500, "Server error");
+        }
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
+        {
+            Finance? finance = await _myDbContext.Finances.FindAsync(id);
+            if (finance != null)
+            {
+                _myDbContext.Finances.Remove(finance);
+                await _myDbContext.SaveChangesAsync();
+                return NoContent();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+        catch (Exception)
+        {
+            return StatusCode(500);
         }
     }
 }
