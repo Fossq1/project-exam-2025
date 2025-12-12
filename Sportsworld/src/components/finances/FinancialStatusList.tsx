@@ -4,7 +4,7 @@ import type { IFinanceContext } from "../../interfaces/IFinanceContext";
 import FinancialStatusItem from "./FinancialStatusItem";
 import { useFinanceContext } from "../../contexts/FinanceContext";
 
-//Financial-section component from the finance-page. 
+//Financial status component from the finance-page. 
 
 const FinancialStatusList = () => {
 

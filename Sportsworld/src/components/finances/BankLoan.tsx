@@ -3,7 +3,7 @@
 const BankLoan = () => {
     return(
         <div>
-            <h3>MoneyLoa</h3>
+            <h3></h3>
         </div>
     )
 }
