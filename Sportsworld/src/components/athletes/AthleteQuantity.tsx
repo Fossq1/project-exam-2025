@@ -7,7 +7,9 @@ const AthleteQuantity = () => {
 
   return (
     <section>
-      <p>Amount of athletes: {getAthleteQuantity()}</p>
+      <h2 className="text-sm py-4">
+        Amount of athletes: {getAthleteQuantity()}
+      </h2>
     </section>
   );
 };

@@ -2,15 +2,12 @@ import { Link } from "react-router-dom";
 
 const PageNavigation = () => {
   return (
-    <nav>
-      <ul className="list-disc pl-6">
-        <li className="hover:underline">
-          <Link to="/">Hjem</Link>
-        </li>
-        <li className="hover:underline">
-          <Link to="venues">Venues</Link>
-        </li>
-      </ul>
+    <nav className="w-auto flex justify-evenly h-12 items-center">
+      <Link to="/">Hjem</Link>
+
+      <Link to="venues">Venues</Link>
+
+      <Link to="athletes">Athletes</Link>
     </nav>
   );
 };
