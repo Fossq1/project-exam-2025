@@ -1,13 +1,14 @@
 import axios from "axios";
 import { type IAthlete } from "../interfaces/IAthlete";
 import type {
-  IDefaultResponse,
   IAthleteResponse,
+  IDefaultResponse,
+  IAthletesResponse,
 } from "../interfaces/IResponseInterface";
 
 const endpoint = "http://localhost:5177/athlete";
 
-const getAllAthletes = async (): Promise<IAthleteResponse> => {
+const getAllAthletes = async (): Promise<IAthletesResponse> => {
   try {
     const response = await axios.get(endpoint);
     return {
@@ -66,4 +67,24 @@ const getAthleteById = async (id: number): Promise<IAthleteResponse> => {
   }
 };
 
-export default { getAllAthletes, postAthlete, deleteAthlete, getAthleteById };
+const insertAthlete = async (athlete: IAthlete): Promise<IDefaultResponse> => {
+  try {
+    const response = await axios.post(endpoint, athlete);
+    console.log(response);
+    return {
+      success: true,
+    };
+  } catch {
+    return {
+      success: false,
+    };
+  }
+};
+
+export default {
+  getAllAthletes,
+  postAthlete,
+  deleteAthlete,
+  getAthleteById,
+  insertAthlete,
+};

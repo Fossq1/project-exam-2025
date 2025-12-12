@@ -6,12 +6,15 @@ export interface IDefaultResponse {
   success: boolean;
 }
 
-export interface IAthleteResponse {
+export interface IAthletesResponse {
   success: boolean;
   data: IAthlete[] | null;
 }
 
-
+export interface IAthleteResponse {
+  success: boolean;
+  data: IAthlete | null;
+}
 
 export interface IVenuesResponse {
   success: boolean;
