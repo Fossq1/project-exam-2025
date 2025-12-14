@@ -3,6 +3,6 @@ export interface IAthlete {
   name: string;
   gender: string;
   price: number;
-  image: string;
+  image?: string;
   purchaseStatus: boolean;
 }

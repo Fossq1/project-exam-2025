@@ -8,6 +8,8 @@ const PageNavigation = () => {
       <Link to="venues">Venues</Link>
 
       <Link to="athletes">Athletes</Link>
+
+      <Link to="editathletes">Create own athlete</Link>
     </nav>
   );
 };
