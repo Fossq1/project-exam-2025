@@ -4,5 +4,5 @@ export interface IAthlete {
   gender: string;
   price: number;
   image: string;
-  purchasestates: boolean;
+  purchaseStatus: boolean;
 }

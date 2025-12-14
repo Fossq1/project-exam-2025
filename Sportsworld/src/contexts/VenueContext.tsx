@@ -10,12 +10,10 @@ interface Props {
   children: ReactNode;
 }
 
-
-export const VenueProvider = ({children} : Props ) => {
-
-        const [venues, setVenues] = useState<IVenue[]>([
-            {id: 99, name: "Venue from context", capacity: 20, image:''}
-        ])
+export const VenueProvider = ({ children }: Props) => {
+  const [venues, setVenues] = useState<IVenue[]>([
+    { id: 99, name: "Venue from context", capacity: 20, image: "" },
+  ]);
 
   useEffect(() => {
     setVenuesFromService();

@@ -4,11 +4,13 @@ import AthleteQuantity from "../components/athletes/AthleteQuantity";
 const AthletePage = () => {
   return (
     <>
-      <header>
-        <h1>Athletes</h1>
+      <header className="bg-red-600">
+        <h1 className="text-4xl text-center py-8">Athletes</h1>
       </header>
-      <AthleteList />
-      <AthleteQuantity />
+      <div className="px-28">
+        <AthleteQuantity />
+        <AthleteList />
+      </div>
     </>
   );
 };

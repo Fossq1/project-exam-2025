@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const PageNavigation = () => {
   return (
-    <nav>
+    <nav className="w-auto flex justify-evenly h-12 items-center">
       <ul>
         <li>
           <Link to="/">Hjem</Link>
@@ -20,3 +20,4 @@ const PageNavigation = () => {
 }
 
 export default PageNavigation;
+

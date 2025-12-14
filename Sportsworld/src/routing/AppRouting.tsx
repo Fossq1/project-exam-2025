@@ -14,14 +14,10 @@ const AppRouting = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/venues" element={<VenuePage />} />
         <Route path="/athletes" element={<AthletePage />} />
-                <Route path='/finance' element={<FinancePage/>}/>
-                <Route path="/athletes" element={<AthletePage />} />
-
-
-            </Routes>
+        <Route path='/finance' element={<FinancePage/>}/>
+      </Routes>
         </BrowserRouter>
     );
 };
 
 export default AppRouting;
-

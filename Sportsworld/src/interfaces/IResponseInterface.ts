@@ -7,10 +7,15 @@ export interface IDefaultResponse {
 }
 
 export interface IAthletesResponse {
+export interface IAthletesResponse {
   success: boolean;
   data: IAthlete[] | null;
 }
 
+export interface IAthleteResponse {
+  success: boolean;
+  data: IAthlete | null;
+}
 export interface IAthleteResponse {
   success: boolean;
   data: IAthlete | null;

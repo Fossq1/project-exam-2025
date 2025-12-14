@@ -13,6 +13,9 @@ createRoot(document.getElementById("root")!).render(
       <AthleteProvider>
         <App />
       </AthleteProvider>
+      <AthleteProvider>
+        <App />
+      </AthleteProvider>
     </VenueProvider>
     </FinanceProvider>
   </StrictMode>,
