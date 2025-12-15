@@ -1,10 +1,8 @@
-import { useContext } from "react";
 import AthleteItem from "./AthleteItem";
-import { type IAthleteContext } from "../../interfaces/IAthleteContext";
-import { AthleteContext } from "../../contexts/AthleteContext";
+import { AthleteContext, useAthleteContext } from "../../contexts/AthleteContext";
 
 const AthleteList = () => {
-  const { athletes } = useContext(AthleteContext) as IAthleteContext;
+  const { athletes } = useAthleteContext();
 
   const getAthleteJSX = () => {
     const athleteJSX = athletes.map((athlete, index) => {

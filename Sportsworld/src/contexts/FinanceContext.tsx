@@ -65,23 +65,32 @@ export const FinanceProvider = ({ children }: Props) => {
 
 /* 
     ********** addToMoneyLeft **********
-    -Goes through the rows from finance table
-    -Finds id that matches financeId
-    -Creates a new version of the selected row:
-        -increments value from moneyLeft
+    - Increases the remaining budget for a given finance row, this instance only 1.
+    - Creates updated copy with increased moneyLeft
+    - Updates to backend using PUT-request
+    - Updates local state if backend succeeds. 
+    
 */
 
-    const addToMoneyLeft = (financeId: number, amount: number) => {
-        setFinances(previousFinance => 
-            previousFinance.map(f =>
-                f.id === financeId
-                ?{
-                    ...f,
-                    moneyLeft: f.moneyLeft + amount 
-                } 
-                : f
-            )
-        );
+    const addToMoneyLeft = async (financeId: number, amount: number) => {
+
+        const current = finances.find(f => f.id === financeId);
+        if (!current) return;
+
+        const updatedFinance={
+            ...current,
+            moneyLeft: current.moneyLeft + amount
+        };
+
+        //backend
+        const result = await FinanceService.updateFinance(financeId, updatedFinance);
+
+        //frontend
+        if (result.success){
+            setFinances(prev => 
+                prev.map(f => (f.id === financeId ? updatedFinance : f ))
+            );
+        }
     };
 
 /* 
@@ -94,19 +103,25 @@ export const FinanceProvider = ({ children }: Props) => {
         -increments by 1 on numberOfPurchases
 */
 
-    const applyPurchase = (financeId : number, price: number) => {
-        setFinances(prevFinance => 
-            prevFinance.map( f =>
-                f.id === financeId
-                ? {
-                    ...f,
-                    moneyLeft: f.moneyLeft - price,
-                    moneySpent: f.moneySpent + price,
-                    numberOfPurchases: f.numberOfPurchases + 1
-                }
-                : f
-            )
-        );    
+    const applyPurchase = async (financeId : number, price: number) => {
+        const current = finances.find(f => f.id === financeId);
+        if(!current) return;
+    
+        const updatedFinance = {
+            ...current,
+            moneyLeft: current.moneyLeft - price,
+            moneySpent: current.moneySpent + price,
+            numberOfPurchases: current.numberOfPurchases + 1
+        };
+
+        const response = await FinanceService.updateFinance(financeId, updatedFinance);
+
+        if (response.success){
+
+            setFinances(prev => 
+                prev.map( f => (f.id === financeId ? updatedFinance : f))
+            ); 
+        }   
     }
 
     const value: IFinanceContext = {

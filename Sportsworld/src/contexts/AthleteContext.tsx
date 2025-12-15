@@ -1,10 +1,18 @@
-import { useState, createContext, type ReactNode, useEffect } from "react";
+import { useState, createContext, type ReactNode, useEffect, useContext } from "react";
 import { type IAthlete } from "../interfaces/IAthlete";
 import AthleteService from "../services/AthleteService";
 import { type IAthleteContext } from "../interfaces/IAthleteContext";
 import { type IDefaultResponse } from "../interfaces/IResponseInterface";
 
 export const AthleteContext = createContext<IAthleteContext | null>(null);
+
+export const useAthleteContext = () => {
+  const context = useContext(AthleteContext);
+  if(!context) {
+    throw new Error("useAthleteContext must be used inside AthleteProvider");
+  }
+  return context;
+};
 
 interface Props {
   children: ReactNode;
@@ -36,12 +44,40 @@ export const AthleteProvider = ({ children }: Props) => {
     }
     return response;
   };
+
+  const purchaseAthlete = async (athleteId: number): Promise<IDefaultResponse> => {
+    const selectedAthlete = athletes.find(athlete => athlete.id === athleteId);
+
+    if (!selectedAthlete){
+      return {
+        success: false
+      };
+    }
+
+    //creates a new object with isPurchases = true
+    const updatedAthlete: IAthlete = {
+      ...selectedAthlete,
+      purchaseStates: true
+    };
+
+    const response = await AthleteService.updateAthlete(athleteId, updatedAthlete);
+
+    if (response.success){
+      setAthletes(prev =>
+        prev.map( athlete => (athlete.id === athleteId ? updatedAthlete : athlete))
+      );
+    }
+    return response;
+  }
+  
+
   return (
     <AthleteContext.Provider
       value={{
         athletes,
         getAthleteQuantity,
         saveAthlete,
+        purchaseAthlete
       }}
     >
       {children}

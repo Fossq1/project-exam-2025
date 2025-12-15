@@ -5,4 +5,5 @@ export interface IAthleteContext {
   athletes: IAthlete[];
   getAthleteQuantity: () => number;
   saveAthlete: (athlete: IAthlete) => Promise<IDefaultResponse>;
-}
+  purchaseAthlete: (athleteId: number) => Promise<IDefaultResponse>;
+};

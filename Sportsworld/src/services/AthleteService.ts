@@ -81,10 +81,28 @@ const insertAthlete = async (athlete: IAthlete): Promise<IDefaultResponse> => {
   }
 };
 
+const updateAthlete =  async (
+  athleteId: number,
+  athlete: IAthlete
+): Promise<{ success: boolean }> => {
+  try{
+    await axios.put(`${endpoint}/${athleteId}`, athlete);
+    return {
+      success: true
+    };
+  }catch (error) {
+    console.error("updateAthlete failed", error);
+    return {
+      success: false
+    }
+  }
+}
+
 export default {
   getAllAthletes,
   postAthlete,
   deleteAthlete,
   getAthleteById,
   insertAthlete,
+  updateAthlete
 };
