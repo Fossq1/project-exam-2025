@@ -1,8 +1,9 @@
-//TODO MARIUS
 import { useState, createContext, type ReactNode, useEffect } from "react";
 import type { IVenueContext } from "../interfaces/IVenueContext";
 import VenueService from "../services/VenueService";
 import type { IVenue } from "../interfaces/IVenue";
+import uploadImage from "../services/ImageUploadService";
+import type { IDefaultResponse } from "../interfaces/IResponseInterface";
 
 export const VenueContext = createContext<IVenueContext | null>(null);
 
@@ -11,9 +12,7 @@ interface Props {
 }
 
 export const VenueProvider = ({ children }: Props) => {
-  const [venues, setVenues] = useState<IVenue[]>([
-    { id: 99, name: "Venue from context", capacity: 20, image: "" },
-  ]);
+  const [venues, setVenues] = useState<IVenue[]>([]);
 
   useEffect(() => {
     setVenuesFromService();
@@ -21,18 +20,33 @@ export const VenueProvider = ({ children }: Props) => {
 
   const setVenuesFromService = async () => {
     const response = await VenueService.getAllVenues();
-    if (response.success === true && response.data != null) {
+    if (response.success && response.data != null) {
       setVenues(response.data);
     }
   };
 
-  const getVenueQuantity = (): number => {
-    return venues.length;
-  };
+  const getVenueQuantity = (): number => venues.length;
 
-  const saveVenue = (venue: IVenue) => {
-    setVenues((prev) => [...prev, venue]);
-  };
+
+
+  
+  const saveVenue = async (newVenue: IVenue, imageFile?: File): Promise<IDefaultResponse> => {
+  if (imageFile) {
+    const uploadResponse = await uploadImage(imageFile, "venues");
+    if (!uploadResponse.success) return { success: false };
+    newVenue.image = `images/venues/${imageFile.name}`;
+  } else {
+    // Setter default image hvis ingen fil lastes opp
+    newVenue.image = "images/venues/default-image-venues.png";
+  }
+
+  const response = await VenueService.insertVenue(newVenue);
+  if (response.success) {
+    setVenues((prev) => [...prev, newVenue]);
+  }
+
+  return response;
+};
 
   return (
     <VenueContext.Provider

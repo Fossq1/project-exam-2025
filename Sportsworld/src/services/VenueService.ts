@@ -1,22 +1,31 @@
-// TODO MARIUS
 import axios from "axios";
 import type { IVenue } from "../interfaces/IVenue";
+import type { IDefaultResponse } from "../interfaces/IResponseInterface";
 
 const venueEndpoint = "http://localhost:5177/venue";
 
-const getAllVenues = async () => {
-  const response = await axios.get(venueEndpoint);
-
-  return {
-    success: true,
-    data: response.data,
-  };
+const getAllVenues = async (): Promise<{ success: boolean; data?: IVenue[] }> => {
+  try {
+    const response = await axios.get(venueEndpoint);
+    return {
+      success: true,
+      data: response.data,
+    };
+  } catch (error) {
+    console.error("Error fetching venues:", error);
+    return { success: false };
+  }
 };
 
-const postVenue = async (newVenue: IVenue) => {
-  const result = await axios.post(venueEndpoint, newVenue);
-  console.log( result )
-}
+const insertVenue = async (venue: IVenue): Promise<IDefaultResponse> => {
+  try {
+    const response = await axios.post(venueEndpoint, venue);
+    console.log("Venue saved:", response.data);
+    return { success: true };
+  } catch (error) {
+    console.error("Error inserting venue:", error);
+    return { success: false };
+  }
+};
 
-
-export default { getAllVenues, postVenue };
+export default { getAllVenues, insertVenue };

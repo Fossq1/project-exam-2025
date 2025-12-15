@@ -3,28 +3,40 @@ using Microsoft.AspNetCore.Mvc;
 namespace SportsworldAPI.Controllers;
 
 [ApiController]
-[Route("/controller")]
-
+[Route("/imageupload")]
 public class ImageUploadController(IWebHostEnvironment _webHostEnvironment) : ControllerBase
 {
     [HttpPost]
-    public async Task<IActionResult> Post(IFormFile file)
+public async Task<IActionResult> Post(IFormFile file, [FromForm] string category)
+{
+    if (file == null || file.Length == 0) 
+        return BadRequest("No file uploaded");
+
+    try
     {
-        try
-        {
-            string webRootPath = _webHostEnvironment.WebRootPath;
-            string absolutePath = Path.Combine(webRootPath, "images", file.FileName);
+        string webRootPath = _webHostEnvironment.WebRootPath;
 
-            using (var fileStream = new FileStream(absolutePath, FileMode.Create))
-            {
-                await file.CopyToAsync(fileStream);
-            }
+        // Bestem mappe basert på kategori
+        string folderPath = Path.Combine(webRootPath, "images", category);
 
-            return Created();
-        }
-        catch
+        if (!Directory.Exists(folderPath))
+            Directory.CreateDirectory(folderPath);
+
+        string filePath = Path.Combine(folderPath, file.FileName);
+
+        using (var fileStream = new FileStream(filePath, FileMode.Create))
         {
-            return StatusCode(500);
+            await file.CopyToAsync(fileStream);
         }
+
+        return Created(filePath, null);
     }
+    catch (Exception ex)
+    {
+        // Log exception for debugging
+        Console.WriteLine(ex);
+        return StatusCode(500, "Something went wrong with the POST-Request");
+    }
+}
+
 }
