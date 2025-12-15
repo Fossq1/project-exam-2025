@@ -10,10 +10,13 @@ public class ImageUploadController(IWebHostEnvironment _webHostEnvironment) : Co
     [HttpPost]
     public async Task<IActionResult> Post(IFormFile file)
     {
+        if (file == null || file.Length == 0) 
+            return BadRequest("No file uploaded");
         try
         {
             string webRootPath = _webHostEnvironment.WebRootPath;
             string absolutePath = Path.Combine(webRootPath, "images", file.FileName);
+            // TODO BRUK GUID FOR TILFELDIGE NAVN
 
             using (var fileStream = new FileStream(absolutePath, FileMode.Create))
             {
@@ -24,7 +27,7 @@ public class ImageUploadController(IWebHostEnvironment _webHostEnvironment) : Co
         }
         catch
         {
-            return StatusCode(500);
+            return StatusCode(500, "Something went wrong with the POST-Request");
         }
     }
 }

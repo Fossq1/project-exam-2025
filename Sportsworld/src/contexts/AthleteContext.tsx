@@ -27,21 +27,38 @@ export const AthleteProvider = ({ children }: Props) => {
     return athletes.length;
   };
 
-  const saveAthlete = async (
-    newAthlete: IAthlete
-  ): Promise<IDefaultResponse> => {
-    const response = await AthleteService.postAthlete(newAthlete);
-    if (response.success) {
-      setAthletes((prev) => [newAthlete, ...prev]);
+  const uploadImage = async (image: File) => {
+    try {
+      const response = await AthleteService.uploadImage(image);
+      if (response.success) {
+        console.log("Image was uploaded successfully");
+      } else {
+        console.log("Failed to upload image");
+      }
+      return response;
+    } catch (error) {
+      console.error("Error uploading image and athlete");
+      return { success: false };
     }
-    return response;
   };
+
+  const insertAthlete = async (athlete: IAthlete) => {
+    if (athlete) {
+      const response = await AthleteService.insertAthlete(athlete);
+      //todo error-handling
+      setAthletes((prev) => [...prev, athlete]);
+    } else {
+      console.log("Athlete was not inserted");
+    }
+  };
+
   return (
     <AthleteContext.Provider
       value={{
         athletes,
         getAthleteQuantity,
-        saveAthlete,
+        uploadImage,
+        insertAthlete,
       }}
     >
       {children}

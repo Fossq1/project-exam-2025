@@ -4,5 +4,6 @@ import { type IDefaultResponse } from "./IResponseInterface";
 export interface IAthleteContext {
   athletes: IAthlete[];
   getAthleteQuantity: () => number;
-  saveAthlete: (athlete: IAthlete) => Promise<IDefaultResponse>;
+  uploadImage: (image: File) => Promise<IDefaultResponse>;
+  insertAthlete: (athlete: IAthlete) => void;
 }

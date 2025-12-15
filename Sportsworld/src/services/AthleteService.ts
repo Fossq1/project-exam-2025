@@ -8,6 +8,8 @@ import type {
 
 const endpoint = "http://localhost:5177/athlete";
 
+const endpointImageUpload = "http://localhost:5177/imageupload/";
+
 const getAllAthletes = async (): Promise<IAthletesResponse> => {
   try {
     const response = await axios.get(endpoint);
@@ -23,17 +25,24 @@ const getAllAthletes = async (): Promise<IAthletesResponse> => {
   }
 };
 
-const postAthlete = async (athlete: IAthlete): Promise<IDefaultResponse> => {
+const uploadImage = async (image: File): Promise<IDefaultResponse> => {
+  //Lager imagepath så bildene blir lagret med riktig filplassering: "images/athletes/"
+  const imagePath = `images/athletes/${image.name}`;
+  const formData = new FormData();
+  // Appender filen sammen med imagePath
+  formData.append("file", image);
   try {
-    const response = await axios.post(endpoint, athlete);
-    console.log(response);
-    return {
-      success: true,
-    };
-  } catch {
-    return {
-      success: false,
-    };
+    const response = await axios({
+      url: endpointImageUpload,
+      method: "POST",
+      data: formData,
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    formData.delete("file");
+    return { success: true };
+  } catch (error) {
+    console.error("Error uploading image", error);
+    return { success: false };
   }
 };
 
@@ -83,8 +92,8 @@ const insertAthlete = async (athlete: IAthlete): Promise<IDefaultResponse> => {
 
 export default {
   getAllAthletes,
-  postAthlete,
   deleteAthlete,
   getAthleteById,
   insertAthlete,
+  uploadImage,
 };
