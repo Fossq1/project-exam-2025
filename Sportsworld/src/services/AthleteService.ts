@@ -30,7 +30,7 @@ const uploadImage = async (image: File): Promise<IDefaultResponse> => {
   const imagePath = `images/athletes/${image.name}`;
   const formData = new FormData();
   // Appender filen sammen med imagePath
-  formData.append("file", image);
+  formData.append("file", image, imagePath);
   try {
     const response = await axios({
       url: endpointImageUpload,
