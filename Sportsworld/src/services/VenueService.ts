@@ -13,4 +13,10 @@ const getAllVenues = async () => {
   };
 };
 
-export default { getAllVenues };
+const postVenue = async (newVenue: IVenue) => {
+  const result = await axios.post(venueEndpoint, newVenue);
+  console.log( result )
+}
+
+
+export default { getAllVenues, postVenue };
