@@ -1,14 +1,13 @@
 import axios from "axios";
 import { type IAthlete } from "../interfaces/IAthlete";
 import type {
-  IAthleteResponse,
   IDefaultResponse,
   IAthletesResponse,
 } from "../interfaces/IResponseInterface";
 
 const endpoint = "http://localhost:5177/athlete";
 
-const endpointImageUpload = "http://localhost:5177/imageupload/";
+const endpointImageUpload = "http://localhost:5177/imageupload";
 
 const getAllAthletes = async (): Promise<IAthletesResponse> => {
   try {
@@ -24,13 +23,12 @@ const getAllAthletes = async (): Promise<IAthletesResponse> => {
     };
   }
 };
-
 const uploadImage = async (image: File): Promise<IDefaultResponse> => {
-  //Lager imagepath så bildene blir lagret med riktig filplassering: "images/athletes/"
-  const imagePath = `images/athletes/${image.name}`;
+  const type = "athletes";
   const formData = new FormData();
   // Appender filen sammen med imagePath
-  formData.append("file", image, imagePath);
+  formData.append("file", image);
+  formData.append("type", type);
   try {
     const response = await axios({
       url: endpointImageUpload,
@@ -60,22 +58,6 @@ const deleteAthlete = async (id: number): Promise<IDefaultResponse> => {
   }
 };
 
-const getAthleteById = async (id: number): Promise<IAthleteResponse> => {
-  try {
-    const response = await axios.get(`${endpoint}/${id}`);
-    console.log(response);
-    return {
-      success: true,
-      data: response.data,
-    };
-  } catch {
-    return {
-      success: false,
-      data: null,
-    };
-  }
-};
-
 const insertAthlete = async (athlete: IAthlete): Promise<IDefaultResponse> => {
   try {
     const response = await axios.post(endpoint, athlete);
@@ -90,10 +72,23 @@ const insertAthlete = async (athlete: IAthlete): Promise<IDefaultResponse> => {
   }
 };
 
+const updateAthlete = async (
+  updatedAthlete: IAthlete
+): Promise<IDefaultResponse> => {
+  try {
+    const response = await axios.put(endpoint, updatedAthlete);
+    console.log(response);
+    return { success: true };
+  } catch (error) {
+    console.error("Something went wrong with updating athlete");
+    return { success: false };
+  }
+};
+
 export default {
   getAllAthletes,
+  updateAthlete,
   deleteAthlete,
-  getAthleteById,
   insertAthlete,
   uploadImage,
 };

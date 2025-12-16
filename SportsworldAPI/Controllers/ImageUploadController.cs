@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace SportsworldAPI.Controllers;
 
 [ApiController]
-[Route("/controller")]
+[Route("/imageupload")]
 
 public class ImageUploadController(IWebHostEnvironment _webHostEnvironment) : ControllerBase
 {
@@ -14,8 +14,10 @@ public class ImageUploadController(IWebHostEnvironment _webHostEnvironment) : Co
             return BadRequest("No file uploaded");
         try
         {
+            // 
+            string type = Request.Form["type"].ToString();
             string webRootPath = _webHostEnvironment.WebRootPath;
-            string absolutePath = Path.Combine(webRootPath, "images", file.FileName);
+            string absolutePath = Path.Combine(webRootPath, "images", type, file.FileName);
             // TODO BRUK GUID FOR TILFELDIGE NAVN
 
             using (var fileStream = new FileStream(absolutePath, FileMode.Create))

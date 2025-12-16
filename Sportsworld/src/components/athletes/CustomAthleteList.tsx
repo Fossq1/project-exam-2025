@@ -51,8 +51,8 @@ const CustomAthleteList = () => {
         image: `images/athletes/${image.name}`,
       };
       try {
-        const response1 = await insertAthlete(newAthlete);
         const response2 = await uploadImage(image);
+        const response1 = await insertAthlete(newAthlete);
       } catch {
         // TODO
       }

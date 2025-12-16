@@ -32,6 +32,7 @@ export const AthleteProvider = ({ children }: Props) => {
       const response = await AthleteService.uploadImage(image);
       if (response.success) {
         console.log("Image was uploaded successfully");
+        setAthletesFromService();
       } else {
         console.log("Failed to upload image");
       }
@@ -44,11 +45,50 @@ export const AthleteProvider = ({ children }: Props) => {
 
   const insertAthlete = async (athlete: IAthlete) => {
     if (athlete) {
-      const response = await AthleteService.insertAthlete(athlete);
-      //todo error-handling
-      setAthletes((prev) => [...prev, athlete]);
+      try {
+        const response = await AthleteService.insertAthlete(athlete);
+        //todo error-handling
+        setAthletes((prev) => [...prev, athlete]);
+        return response;
+      } catch (error) {
+        console.log("Error setting athlete");
+        return { success: false };
+      }
     } else {
-      console.log("Athlete was not inserted");
+      console.log("Athlete was not set");
+      return { success: false };
+    }
+  };
+
+  const deleteAthlete = async (athleteId: number) => {
+    try {
+      const response = await AthleteService.deleteAthlete(athleteId);
+      if (response.success) {
+        console.log("Athlete was deleted");
+        setAthletesFromService();
+      } else {
+        console.log("Error occured while trying to delete athlete");
+      }
+      return response;
+    } catch (error) {
+      console.error("Could not delete athlete");
+      return { success: false };
+    }
+  };
+
+  const updateAthlete = async (editedAthlete: IAthlete) => {
+    try {
+      const response = await AthleteService.updateAthlete(editedAthlete);
+      if (response.success) {
+        console.log("Athlete was edited");
+        setAthletesFromService();
+      } else {
+        console.log("Error occured while editing athlete");
+      }
+      return response;
+    } catch (error) {
+      console.error("Could not edit athlete");
+      return { success: false };
     }
   };
 
@@ -59,6 +99,8 @@ export const AthleteProvider = ({ children }: Props) => {
         getAthleteQuantity,
         uploadImage,
         insertAthlete,
+        deleteAthlete,
+        updateAthlete,
       }}
     >
       {children}
