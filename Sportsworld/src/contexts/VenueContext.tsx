@@ -47,6 +47,22 @@ export const VenueProvider = ({ children }: Props) => {
 
   return response;
 };
+const updateVenue = async (venue: IVenue, imageFile?: File): Promise<IDefaultResponse> => {
+  if (!venue.id) return { success: false }; // må ha ID for update
+
+  if (imageFile) {
+    const uploadResponse = await uploadImage(imageFile, "venues");
+    if (!uploadResponse.success) return { success: false };
+    venue.image = `images/venues/${imageFile.name}`;
+  }
+
+  const response = await VenueService.updateVenue(venue);
+  if (response.success) {
+    // oppdater venue i local state
+    setVenues((prev) => prev.map(venue => venue.id === venue.id ? venue : venue));
+  }
+  return response;
+};
 
   return (
     <VenueContext.Provider
@@ -54,6 +70,7 @@ export const VenueProvider = ({ children }: Props) => {
         venues,
         getVenueQuantity,
         saveVenue,
+        updateVenue
       }}
     >
       {children}

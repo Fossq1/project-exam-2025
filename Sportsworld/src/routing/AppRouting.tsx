@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HomePage, VenuePage, AthletePage } from "../pages";
 import PageNavigation from "../components/shared/PageNavigation";
 import FinancePage from "../pages/FinancePage";
-import AddVenuePage from "../pages/AddVenuePage";
+import AddVenuePage from "../pages/UpdateVenuesPage";
 
 
 

@@ -28,4 +28,15 @@ const insertVenue = async (venue: IVenue): Promise<IDefaultResponse> => {
   }
 };
 
-export default { getAllVenues, insertVenue };
+
+
+const updateVenue = async (venue: IVenue): Promise<IDefaultResponse> => {
+  try {
+    const response = await axios.put(`${venueEndpoint}/${venue.id}`, venue)
+    console.log("Venue updated:", response.data)
+    return { success: true };
+  } catch {
+    return { success: false };
+  }
+};
+export default { getAllVenues, insertVenue, updateVenue };

@@ -5,4 +5,5 @@ export interface IVenueContext {
     venues: IVenue[],
     getVenueQuantity: () => number,
     saveVenue: (venue: IVenue, imageFile?: File) => Promise<IDefaultResponse>;
+    updateVenue: (venue: IVenue, imageFile?: File) => Promise<IDefaultResponse>;
 }
