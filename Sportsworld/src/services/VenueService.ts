@@ -39,4 +39,17 @@ const updateVenue = async (venue: IVenue): Promise<IDefaultResponse> => {
     return { success: false };
   }
 };
-export default { getAllVenues, insertVenue, updateVenue };
+
+const deleteVenue = async (venueId: number): Promise<IDefaultResponse> => {
+  try{
+    const response = await axios.delete(`${venueEndpoint}/${venueId}`)
+    console.log("Venue deleted:", response.data)
+    return {success: true};
+  }catch{
+    return {success: false};
+  }
+};
+
+
+
+export default { getAllVenues, insertVenue, updateVenue, deleteVenue };

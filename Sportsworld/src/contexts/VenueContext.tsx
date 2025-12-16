@@ -2,7 +2,6 @@ import { useState, createContext, type ReactNode, useEffect } from "react";
 import type { IVenueContext } from "../interfaces/IVenueContext";
 import VenueService from "../services/VenueService";
 import type { IVenue } from "../interfaces/IVenue";
-import uploadImage from "../services/ImageUploadService";
 import type { IDefaultResponse } from "../interfaces/IResponseInterface";
 
 export const VenueContext = createContext<IVenueContext | null>(null);
@@ -30,39 +29,40 @@ export const VenueProvider = ({ children }: Props) => {
 
 
   
-  const saveVenue = async (newVenue: IVenue, imageFile?: File): Promise<IDefaultResponse> => {
-  if (imageFile) {
-    const uploadResponse = await uploadImage(imageFile, "venues");
-    if (!uploadResponse.success) return { success: false };
-    newVenue.image = `images/venues/${imageFile.name}`;
-  } else {
-    // Setter default image hvis ingen fil lastes opp
-    newVenue.image = "images/venues/default-image-venues.png";
-  }
-
+  const saveVenue = async (newVenue: IVenue): Promise<IDefaultResponse> => {
   const response = await VenueService.insertVenue(newVenue);
   if (response.success) {
-    setVenues((prev) => [...prev, newVenue]);
+    setVenuesFromService();
   }
-
   return response;
 };
-const updateVenue = async (venue: IVenue, imageFile?: File): Promise<IDefaultResponse> => {
-  if (!venue.id) return { success: false }; // må ha ID for update
 
-  if (imageFile) {
-    const uploadResponse = await uploadImage(imageFile, "venues");
-    if (!uploadResponse.success) return { success: false };
-    venue.image = `images/venues/${imageFile.name}`;
-  }
+const updateVenue = async (venue: IVenue): Promise<IDefaultResponse> => {
+  if (!venue.id) return { success: false }; // må ha ID for update
 
   const response = await VenueService.updateVenue(venue);
   if (response.success) {
     // oppdater venue i local state
-    setVenues((prev) => prev.map(venue => venue.id === venue.id ? venue : venue));
+    setVenuesFromService();
   }
   return response;
 };
+
+
+  const deleteVenue = async(venueId: number) : Promise<IDefaultResponse> => {
+    try{
+      const response = await VenueService.deleteVenue(venueId);
+      if (response.success){
+        setVenuesFromService();
+        return response;
+      }else{
+        return {success: false}
+      }
+    }catch{
+      return {success: false}
+    }
+  }
+
 
   return (
     <VenueContext.Provider
@@ -70,7 +70,8 @@ const updateVenue = async (venue: IVenue, imageFile?: File): Promise<IDefaultRes
         venues,
         getVenueQuantity,
         saveVenue,
-        updateVenue
+        updateVenue,
+        deleteVenue
       }}
     >
       {children}

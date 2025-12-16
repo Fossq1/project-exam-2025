@@ -22,14 +22,21 @@ public async Task<IActionResult> Post(IFormFile file, [FromForm] string category
         if (!Directory.Exists(folderPath))
             Directory.CreateDirectory(folderPath);
 
-        string filePath = Path.Combine(folderPath, file.FileName);
+        string fileExtension = Path.GetExtension(file.FileName);
+        string uniqueFileName = Guid.NewGuid().ToString() + fileExtension;
+
+        string filePath = Path.Combine(folderPath, uniqueFileName);
 
         using (var fileStream = new FileStream(filePath, FileMode.Create))
         {
             await file.CopyToAsync(fileStream);
         }
 
-        return Created(filePath, null);
+        string relativeFilePath = Path.Combine("images", category, uniqueFileName).Replace("\\", "/");
+        return Created("",new
+        {
+           path = relativeFilePath 
+        });
     }
     catch (Exception ex)
     {

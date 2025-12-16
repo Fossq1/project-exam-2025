@@ -9,6 +9,7 @@ const VenueItem = ({venue}:{venue: IVenue}) => {
         <article 
         className="duration-100 scale-85 hover:scale-88 border border-red-600 border-[5px] rounded-lg pb-8 shadow-2xl"
         >
+            <h2 className="text-xl">{venue.name}</h2>
             <img
                 className="block mx-auto h-auto w-xs pb-8"
                 src={`${endpoint}${venue.image}`}

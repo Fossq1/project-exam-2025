@@ -29,7 +29,7 @@ useEffect( () => {
 
 
     const getVenueJSX = () => {
-        const venueJSX = venues.map( (venue, index) => {
+        const venueJSX = filteredVenues.map( (venue, index) => {
             return(
                 <VenueItem
                     key={"venue" + index}
@@ -42,9 +42,9 @@ useEffect( () => {
     
     return(
         <section>
-            <header>
-                <h2>List of all venues:</h2>
-                <p>Filter by name:</p>
+            <header className="flex justify-center py-4">
+                <h2>List of all venues: </h2>
+                <p> Filter by name:</p>
                 <input 
                 value={filterText}
                 className="border border-white-500"
