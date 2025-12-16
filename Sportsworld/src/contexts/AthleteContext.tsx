@@ -48,7 +48,7 @@ export const AthleteProvider = ({ children }: Props) => {
       try {
         const response = await AthleteService.insertAthlete(athlete);
         //todo error-handling
-        setAthletes((prev) => [...prev, athlete]);
+        await setAthletesFromService();
         return response;
       } catch (error) {
         console.log("Error setting athlete");
@@ -65,7 +65,7 @@ export const AthleteProvider = ({ children }: Props) => {
       const response = await AthleteService.deleteAthlete(athleteId);
       if (response.success) {
         console.log("Athlete was deleted");
-        setAthletesFromService();
+        await setAthletesFromService();
       } else {
         console.log("Error occured while trying to delete athlete");
       }
@@ -81,7 +81,7 @@ export const AthleteProvider = ({ children }: Props) => {
       const response = await AthleteService.updateAthlete(editedAthlete);
       if (response.success) {
         console.log("Athlete was edited");
-        setAthletesFromService();
+        await setAthletesFromService();
       } else {
         console.log("Error occured while editing athlete");
       }
