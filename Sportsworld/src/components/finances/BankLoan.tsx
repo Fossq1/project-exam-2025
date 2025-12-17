@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useFinanceContext } from "../../contexts/FinanceContext";
-import ErrorPopup from "../shared/ErrorPopUp";
-
+import ErrorPopup from "../shared/ErrorPopup";
 const BankLoan = () => {
   // Function used to add money to budget
   const { addToMoneyLeft } = useFinanceContext();
