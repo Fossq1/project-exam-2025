@@ -1,5 +1,6 @@
 namespace SportsworldAPI.Interfaces;
 
+// Interface for Venue
 interface IVenue
 {
     int Id { get; set;}

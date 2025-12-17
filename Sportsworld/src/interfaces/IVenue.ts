@@ -1,4 +1,3 @@
-//TODO MARIUS
 
 export interface IVenue{
     id?: number,

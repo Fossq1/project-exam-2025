@@ -1,14 +1,19 @@
-using System.ComponentModel.DataAnnotations;
 using SportsworldAPI.Interfaces;
+
 
 namespace SportsworldAPI.Models;
 
+
+
+
+// Athlete objects implements IAthlete interface, defining the properties
 public class Athlete : IAthlete
 {
-    public int Id { get; set; }
-    public  string Name { get; set; } = string.Empty;
-    public  string Gender { get; set; } = string.Empty;
-    public  int Price { get; set; }
-    public  string Image { get; set; } = string.Empty;
-    public  bool PurchaseStatus { get; set; }
+public int Id { get; set; }
+public string Name { get; set; } = string.Empty;
+public string Gender { get; set; } = string.Empty;
+public int Price { get; set; }
+public string Image { get; set; } = string.Empty;
+public bool PurchaseStatus { get; set; }
 }
+

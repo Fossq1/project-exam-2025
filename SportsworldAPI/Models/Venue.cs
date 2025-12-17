@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using SportsworldAPI.Interfaces;
 
 namespace SportsworldAPI.Models;
-
+// get, set for venue
 public class Venue : IVenue
 {
     public int Id { get; set; }

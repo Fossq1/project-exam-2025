@@ -16,7 +16,7 @@ public async Task<IActionResult> Post(IFormFile file, [FromForm] string category
     {
         string webRootPath = _webHostEnvironment.WebRootPath;
 
-        // Bestem mappe basert på kategori
+        // Deciding folder based on category
         string folderPath = Path.Combine(webRootPath, "images", category);
 
         if (!Directory.Exists(folderPath))

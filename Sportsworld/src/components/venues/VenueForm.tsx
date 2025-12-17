@@ -2,242 +2,239 @@ import { useRef, useContext, useState, type ChangeEvent } from "react";
 import { VenueContext } from "../../contexts/VenueContext";
 import type { IVenueContext } from "../../interfaces/IVenueContext";
 import type { IVenue } from "../../interfaces/IVenue";
-import uploadImage from "../../services/ImageUploadService";
+
+// Handling all inputs for CRUD
+
 
 const VenueForm = () => {
+
   const { venues, saveVenue, updateVenue, deleteVenue } =
     useContext(VenueContext) as IVenueContext;
-  
-    const nameInput = useRef<HTMLInputElement>(null);
-    const capacityInput = useRef<HTMLInputElement>(null);
 
-    const [image, setImage] = useState<File | null>(null);
-    const [selectedVenue, setSelectedVenue] = useState<IVenue | null>(null);
-    const [statusMessage, setStatusMessage] = useState("Enter name and capacity");
-    const [statusMessageColor, setstatusMessageColor] = useState<boolean | null>(null); // False = rød, True = grønn
+  const nameInput = useRef<HTMLInputElement>(null);
+  const capacityInput = useRef<HTMLInputElement>(null);
 
-    const endpoint = "http://localhost:5177/";
+  const [image, setImage] = useState<File | null>(null);
+  const [selectedVenue, setSelectedVenue] = useState<IVenue | null>(null);
+  const [statusMessage, setStatusMessage] = useState("Enter name and capacity");
+  const [statusMessageColor, setstatusMessageColor] = useState<boolean | null>(null); // false = red text color, true = green text color
+
+  const endpoint = "http://localhost:5177/";
 
   const setImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files?.length) {
-      setImage(e.target.files[0]);
-    }
+    if (e.target.files?.length) setImage(e.target.files[0]);
   };
 
-
-  // resetter statusmeldingen etter 2,5 sekunder og tømmer inputfeltene
+    // Resetting the inputfields when the button is pressed && putting the statusmessage after 2.5 seconds
   const resetForm = () => {
     setTimeout(() => {
-   setStatusMessage("Enter name and capacity or chose a venue to edit")
-   setstatusMessageColor(true)
-  }, 2500);
-  if (nameInput.current) nameInput.current.value = "";
-  if (capacityInput.current) capacityInput.current.value = "";
-  setImage(null);
-  setSelectedVenue(null);
+      setStatusMessage("Enter name and capacity or choose a venue to edit");
+      setstatusMessageColor(true);
+    }, 2500);
+
+    if (nameInput.current) nameInput.current.value = "";
+    if (capacityInput.current) capacityInput.current.value = "";
+    setImage(null);
+    setSelectedVenue(null);
   };
 
+    // SaveVenue (Add/update venue is handled here)
   const handleSaveVenue = async () => {
     if (
       !nameInput.current ||
       !capacityInput.current ||
       nameInput.current.value.trim() === "" ||
-      capacityInput.current.value.trim() === "" 
-
+      capacityInput.current.value.trim() === ""
     ) {
-      setstatusMessageColor(false); // false er her lik rød
-      setStatusMessage("Please enter name and capacity or chose a venue to edit");
+      setstatusMessageColor(false);
+      setStatusMessage("Please enter name and capacity or choose a venue to edit");
       return;
     }
-
+      //Checking to see if a venue is selected, if no venue is selected insert new venue
     try {
       if (!selectedVenue) {
-
-        let imagePath = "images/venues/default-image-venues.jpg";
-
-        if (image){
-          const uploadResult = await uploadImage(image, "venues");
-          if(!uploadResult.success || !uploadResult.path){
-            throw new Error("Image upload failed")
-          }
-          imagePath = uploadResult.path;
-        }
-
-
-
+        // New venue, using Omit to "create" the venue without an id, the id is set from the database when the setvenuesFromService is called
         const newVenue: Omit<IVenue, "id"> = {
           name: nameInput.current.value,
           capacity: Number(capacityInput.current.value),
-          image: imagePath
+          image: "", // Is set in context via saveVenue
         };
 
-        const response = await saveVenue(newVenue);
-
-        if (!response.success) throw new Error();
+        const response = await saveVenue(newVenue, image ?? undefined);
+        if (!response.success) throw new Error("Failed to save venue");
         setStatusMessage("Venue added!");
-      }
-
-      else {
-
-          let imagePath = selectedVenue.image;
-
-          if(image){
-            const uploadresult = await uploadImage(image, "venues");
-            if(!uploadresult.success || !uploadresult.path){
-              throw new Error("Image upload failed")
-            }
-            imagePath = uploadresult.path;
-          }
-
-        if (selectedVenue.id == null) {
-          throw new Error("Missing venue id on update");
-        }
+      } else {
+        // Update existing venue, checking that the selected venue has an id
+        if (!selectedVenue.id) throw new Error("Missing venue id for update");
 
         const updatedVenue: IVenue = {
           id: selectedVenue.id,
           name: nameInput.current.value,
           capacity: Number(capacityInput.current.value),
-          image: imagePath
+          image: selectedVenue.image, // Is set in context via saveVenue
         };
 
-        const response = await updateVenue(updatedVenue);
-
-        if (!response.success) throw new Error();
+        const response = await updateVenue(updatedVenue, image ?? undefined);
+        if (!response.success) throw new Error("Failed to update venue");
         setStatusMessage("Venue updated!");
       }
 
       setstatusMessageColor(true);
       resetForm();
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
       setstatusMessageColor(false);
       setStatusMessage("Failed to save venue");
     }
   };
 
-  // Funksjon for å velge venue til sletting/oppdatering
-
   const handleSelectVenue = (venue: IVenue) => {
     setSelectedVenue(venue);
-    setStatusMessage("Click update venue to submit your changes")
-    setstatusMessageColor(true); // true er lik grønn
+    setStatusMessage("Click 'Update venue' to submit your changes");
+    setstatusMessageColor(true);
 
     if (nameInput.current) nameInput.current.value = venue.name;
-    if (capacityInput.current)
-      capacityInput.current.value = venue.capacity.toString();
+    if (capacityInput.current) capacityInput.current.value = venue.capacity.toString();
   };
 
-
-    // Sletting av venue
   const handleDeleteVenue = async () => {
     if (!selectedVenue?.id) return;
 
     try {
       const response = await deleteVenue(selectedVenue.id);
-      setStatusMessage("Venue deleted!")
+      if (!response.success) throw new Error("Failed to delete venue");
+
+      setStatusMessage("Venue deleted!");
       setstatusMessageColor(false);
-      if (!response.success) throw new Error();
       resetForm();
     } catch (error) {
       console.error(error);
+      setStatusMessage("Failed to delete venue");
+      setstatusMessageColor(false);
     }
   };
 
   return (
-    <section className="border border-red-600 border-[5px] rounded-lg pb-8 px-12 grid grid-cols-1 gap-4 text-center place-items-center">
-      {/* Skjema for å legge til  / oppdatere venues */}
-      <article className="border rounded-xl p-4 place-items-center" >
-        <h3 className="text-xl mb-4">
-          {selectedVenue ? "Update venue" : "Add venue"}
-        </h3>
+    <section className=" max-w-7xl
+    mx-auto
+    px-4
+    py-8
+    grid
+    grid-cols-1
+    gap-12">
+      {/* input fields + file upload for adding a new venue / updating an existing venue */}
+      <article
+  className="
+    border
+    rounded-xl
+    p-6
+    w-full
+    max-w-md
+    mx-auto
+  "
+>
+  <h3 className="text-2xl font-semibold mb-6 text-center">
+    {selectedVenue ? "Update venue" : "Add venue"}
+  </h3>
 
-        <div className="flex flex-col gap-2 mb-4">
-          <label>Name</label>
-          <input className="border p-1" ref={nameInput} type="text" />
+  <div className="flex flex-col gap-3">
+    <label className="text-left">Name</label>
+    <input className="border p-2 rounded" ref={nameInput} type="text" />
 
-          <label>Capacity</label>
-          <input className="border p-1" ref={capacityInput} type="number" />
+    <label className="text-left">Capacity</label>
+    <input className="border p-2 rounded" ref={capacityInput} type="number" />
 
-          <label>
-            Image (optional)
-            <input type="file" onChange={setImageHandler} />
-          </label>
+    <label className="text-left">
+      Image (optional)
+      <input type="file" onChange={setImageHandler} className="mt-1" />
+    </label>
 
+    {/* Current image preview */}
+    {selectedVenue?.image && !image && (
+      <div className="mt-4">
+        <h4 className="mb-2 font-medium text-left">Current image</h4>
 
-          {/*Hvis et bilde er valgt for editing, så vises bildet */}
-             {selectedVenue?.image && !image && (
-            <div className="mt-2">
-              <h4>Current Image:</h4>
-              <img
-                src={`${endpoint}${selectedVenue.image}`}
-                alt="Selected venue"
-                className="h-xs rounded"
-              />
-            </div>
-          )}
-
-          <button
-            onClick={handleSaveVenue}
-            className="mt-4 bg-green-600 text-white px-4 py-2 rounded"
-          >
-            {selectedVenue ? "Update venue" : "Add new venue"}
-          </button>
-
-          {selectedVenue && (
-            <button
-              onClick={handleDeleteVenue}
-              className="bg-red-600 text-white px-4 py-2 rounded"
-            >
-              Delete selected venue
-            </button>
-          )}
-
-          {statusMessageColor !== null && (
-            <p className={statusMessageColor ? "text-green-600" : "text-red-600"}>
-              {statusMessage}
-            </p>
-          )}
+        <div className="w-full h-40 overflow-hidden rounded-lg">
+          <img
+            src={`${endpoint}${selectedVenue.image}`}
+            alt="Selected venue"
+            className="w-full h-full object-cover"
+          />
         </div>
-      </article>
+      </div>
+    )}
 
-      {/* Knapp for å vise / skjule eksisterende venues */}
-    
+    <button
+      onClick={handleSaveVenue}
+      className="mt-6 bg-green-600 hover:bg-green-700 text-white py-2 rounded transition"
+    >
+      {selectedVenue ? "Update venue" : "Add new venue"}
+    </button>
 
-      {/* Listen med venues og tilhørende edit knapp */}
-    
-        <section className="border rounded-xl p-4">
-          <h3 className="text-xl mb-4">Existing Venues</h3>
+    {selectedVenue && (
+      <button
+        onClick={handleDeleteVenue}
+        className="bg-red-600 hover:bg-red-700 text-white py-2 rounded transition"
+      >
+        Delete selected venue
+      </button>
+    )}
 
-          <div className="grid grid-cols-3 gap-4">
-            {venues.map((venue) => (
-              <article
-                key={venue.id}
-                className="border rounded-xl p-4 flex flex-col justify-between"
+    {statusMessageColor !== null && (
+      <p
+        className={`text-center ${
+          statusMessageColor ? "text-green-600" : "text-red-600"
+        }`}
+      >
+        {statusMessage}
+      </p>
+    )}
+  </div>
+</article>
+
+      {/* List of existing venues */}
+      <section className="rounded-xl p-6 w-full">
+        <h3 className="text-xl font-bold text-center mb-4">Existing Venues</h3>
+        <div className="grid
+                        grid-cols-1
+                        sm:grid-cols-2
+                        lg:grid-cols-3
+                        xl:grid-cols-4
+                        gap-6">
+          {venues.map((venue) => (
+            <article
+              key={venue.id}
+              className=" border
+                          rounded-xl
+                          p-4
+                          flex
+                          flex-col
+                          h-full
+                          "
+            >
+              <div>
+                <h4 className="font-semibold">{venue.name}</h4>
+                <p>Capacity: {venue.capacity}</p>
+
+                {venue.image && (
+                  <img
+                    src={`${endpoint}${venue.image}`}
+                    alt={venue.name}
+                    className="w-full h-32 object-cover rounded"
+                  />
+                )}
+              </div>
+                  {/*Button handling selectVenue */}
+              <button
+                onClick={() => handleSelectVenue(venue)}
+                className="mt-2 bg-blue-600 text-white px-2 py-1 rounded"
               >
-                <div>
-                  <h4 className="font-semibold">{venue.name}</h4>
-                  <p>Capacity: {venue.capacity}</p>
-
-                  {venue.image && (
-                    <img
-                      src={`${endpoint}${venue.image}`}
-                      alt={venue.name}
-                      className="w-full h-32 object-cover rounded"
-                    />
-                  )}
-                </div>
-
-                <button
-                  onClick={() => handleSelectVenue(venue)}
-                  className="mt-2 bg-blue-600 text-white px-2 py-1 rounded"
-                >
-                  Edit
-                </button>
-              </article>
-            ))}
-          </div>
-        </section>
-      
+                Edit
+              </button>
+            </article>
+          ))}
+        </div>
+      </section>
     </section>
   );
 };

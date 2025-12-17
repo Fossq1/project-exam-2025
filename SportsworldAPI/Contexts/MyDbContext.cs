@@ -12,8 +12,7 @@ public interface IMyDbContext
 
 public class MyDbContext(DbContextOptions<MyDbContext> options) : DbContext(options), IMyDbContext
 {
-    // ALLE TABELLER OPPRETTES HER, IKKE BARE VENUE- KJØR dotnet ef migrations add *navnPåMigration* ETTERFULGT AV dotnet ef database update
-
+// Creating all the tables for the database
     public DbSet<Models.Venue> Venues { get; set; }
 
     public DbSet<Models.Athlete> Athletes { get; set; }

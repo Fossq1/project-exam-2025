@@ -1,10 +1,8 @@
 import axios from "axios";
-
+import { type ImageUploadResponse } from "../interfaces/IResponseInterface";
 const endpoint = "http://localhost:5177/imageupload";
 
-interface ImageUploadResponse {
-  path: string;
-}
+// uploadImage function used to add images to their correct folder (athletes or venues) Returns the filepath (GUID is used)
 
 const uploadImage = async (image: File, category: "athletes" | "venues") => {
   const formData = new FormData();

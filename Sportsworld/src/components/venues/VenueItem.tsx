@@ -1,4 +1,3 @@
-//TODO MARIUS
 import type { IVenue } from "../../interfaces/IVenue";
 
 const endpoint = "http://localhost:5177/";
@@ -6,21 +5,37 @@ const endpoint = "http://localhost:5177/";
 const VenueItem = ({venue}:{venue: IVenue}) => {
 
     return(
-        <article 
-        className="duration-100 scale-85 hover:scale-88 border border-red-600 border-[5px] rounded-lg pb-8 shadow-2xl"
-        >
-            <h2 className="text-xl">{venue.name}</h2>
-            <img
-                className="block mx-auto h-auto w-xs pb-8"
-                src={`${endpoint}${venue.image}`}
-                alt={venue.name}
-                />
-            <h3>{venue.name} (ID: {venue.id})</h3>
+       <article
+  className="
+    border-4 border-red-600
+    rounded-xl
+    shadow-2xl
+    p-6
+    transition-transform duration-150
+    hover:scale-105
+  "
+>
+  <h2 className="text-2xl font-semibold text-center mb-4">
+    {venue.name}
+  </h2>
 
+  {/* Image wrapper responsive with breakpoints for phone/tablet/pc */}
+  <div className="w-full h-48 sm:h-56 md:h-64 overflow-hidden rounded-lg mb-4">
+    <img
+      src={`${endpoint}${venue.image}`}
+      alt={venue.name}
+      className="w-full h-full object-cover"
+    />
+  </div>
 
-                {/*Legger til .toLocaleString for å skrive ut kapasiteten penere formatert*/}
-            <p>Capacity: ≈ {venue.capacity.toLocaleString("nb-NO")} people</p>
-        </article>
+  <h3 className="text-lg font-medium">
+    {venue.name} (ID: {venue.id})
+  </h3>
+
+  <p className="text-xl mt-2">
+    Capacity: ≈ {venue.capacity.toLocaleString("nb-NO")} people
+  </p>
+</article>
     )
 }
 

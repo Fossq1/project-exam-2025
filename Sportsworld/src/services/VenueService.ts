@@ -2,8 +2,10 @@ import axios from "axios";
 import type { IVenue } from "../interfaces/IVenue";
 import type { IDefaultResponse } from "../interfaces/IResponseInterface";
 
+// endpoint for API venues
 const venueEndpoint = "http://localhost:5177/venue";
 
+ // get all venues from API
 const getAllVenues = async (): Promise<{ success: boolean; data?: IVenue[] }> => {
   try {
     const response = await axios.get(venueEndpoint);
@@ -17,6 +19,7 @@ const getAllVenues = async (): Promise<{ success: boolean; data?: IVenue[] }> =>
   }
 };
 
+// Insert a new venue to the API
 const insertVenue = async (venue: IVenue): Promise<IDefaultResponse> => {
   try {
     const response = await axios.post(venueEndpoint, venue);
@@ -29,7 +32,7 @@ const insertVenue = async (venue: IVenue): Promise<IDefaultResponse> => {
 };
 
 
-
+// update an existing venue
 const updateVenue = async (venue: IVenue): Promise<IDefaultResponse> => {
   try {
     const response = await axios.put(`${venueEndpoint}/${venue.id}`, venue)
@@ -40,6 +43,7 @@ const updateVenue = async (venue: IVenue): Promise<IDefaultResponse> => {
   }
 };
 
+// delete an existing venue
 const deleteVenue = async (venueId: number): Promise<IDefaultResponse> => {
   try{
     const response = await axios.delete(`${venueEndpoint}/${venueId}`)

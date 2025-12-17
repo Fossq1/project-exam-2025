@@ -3,35 +3,49 @@ import { type IVenue } from "./IVenue";
 import { type IFinance } from "./IFinance";
 
 export interface IDefaultResponse {
-  success: boolean;
+success: boolean;
 }
+
 
 export interface IAthletesResponse {
-  success: boolean;
-  data: IAthlete[] | null;
+success: boolean;
+data: IAthlete[] | null;
 }
+
 
 export interface IAthleteResponse {
-  success: boolean;
-  data: IAthlete | null;
+success: boolean;
+data: IAthlete | null;
 }
+
 
 export interface IVenuesResponse {
-  success: boolean;
-  data: IVenue[] | null;
+success: boolean;
+data: IVenue[] | null;
 }
 
+
 export interface IVenueResponse {
-  success: boolean;
-  data: IVenue | null;
+success: boolean;
+data: IVenue | null;
+}
+
+
+export interface ImageUploadResponse {
+success: boolean;
+path: string;
 }
 
 export interface IFinancesResponse {
-  success: boolean; 
-  data: IFinance[] | null; 
+ success: boolean;
+ data: IFinance[] | null;
 }
 
+
 export interface IFinanceResponse {
-  success: boolean;
-  data: IFinance;
+ success: boolean;
+ data: IFinance;
 }
+
+
+

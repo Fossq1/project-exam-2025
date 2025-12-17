@@ -1,5 +1,6 @@
 import VenueForm from "../components/venues/VenueForm";
 
+// page for updating / adding venues // VenueForm handles all the input
 const UpdateVenuesPage = () => {
   return (
     <section className="max-w-5xl mx-auto mt-10">
