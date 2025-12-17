@@ -6,16 +6,17 @@ using SportsworldAPI.Contexts;
 
 
 
-
+//creating a namespace for Finance controller
 namespace SportsworldAPI.Controllers;
 
-
+//To Make the class behave as a Web API controller
 [ApiController]
+//Sets Endpoint route to be controllers name ("controller" part excluded)
 [Route("[controller]")]
 public class FinanceController(MyDbContext _myDbContext) : ControllerBase
 {
-   //getAll
-   [HttpGet]
+
+//getAll - Returns a list of all finance records from the database   [HttpGet]
    public async Task<ActionResult<List<Finance>>> Get()
    {
        try
@@ -34,7 +35,8 @@ public class FinanceController(MyDbContext _myDbContext) : ControllerBase
    }
 
 
-   //getById
+ //getById - returns a finance object from the database by searching for id
+
    [HttpGet("{id}")]
    public async Task<ActionResult<Finance>> Get(int id)
    {
@@ -59,7 +61,7 @@ public class FinanceController(MyDbContext _myDbContext) : ControllerBase
 
    }
 
-
+   //HTTP PUT - updates a finance entry and saves the changes to the database.
    [HttpPut]
    public async Task<ActionResult> Put(Finance editedFinance)
    {
@@ -81,7 +83,7 @@ public class FinanceController(MyDbContext _myDbContext) : ControllerBase
        }
    }
 
-
+   //HTTP POST - creates new finance entry to the database.
    [HttpPost]
    public async Task<ActionResult<Finance>> Post(Finance newFinance)
    {
@@ -101,7 +103,7 @@ public class FinanceController(MyDbContext _myDbContext) : ControllerBase
        }
    }
 
-
+   //Deletes a finance record from the database by ID.
    [HttpDelete]
    public async Task<IActionResult> Delete(int id)
    {

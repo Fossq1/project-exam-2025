@@ -1,5 +1,6 @@
 namespace SportsworldAPI.Interfaces;
 
+//Represents the finance data for the application.
 interface IFinance
 {
     int Id { get; set; }

@@ -1,689 +1,572 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Sportsworld API</title>
-   <link rel="stylesheet" href="./css/placeholder.css">
-</head>
-<body>
-   <header>
-       <h1 class="main-title">
-           Sportsworld API Doucmentation
-       </h1>
-   </header>
-   <main>
-
-
-       <!--Athlete API section-->
-       <section class="athlete-api-section">
-           <h2>Athlete API</h2>
-           <p>This API handles athletes in the Sportsworld application.<br>
-               The API supports retrieving, creating updating and deleting athletes.
-           </p>
-
-
-           <!--Athlete Base URL-->
-           <article>
-               <h2>Base URL</h2>
-               <code>http://localhost:5177/athlete</code>
-           </article>
-
-
-           <!--Athlete Model -->
-           <article>
-               <h2>Athlete Model</h2>
-               <pre>
-                   <code>
-                       {
-                           "id": number,
-                           "name": string,
-                           "gender": string,
-                           "price": number,
-                           "image": string,
-                           "purchaseStatus": boolean 
-                         }
-                   </code>
-               </pre>
-           </article>
-
-
-           <!--GET /athlete-->
-
-
-           <article>
-               <h2>GET /athlete</h2>
-               <p>Returns a list of all athletes</p>
-              
-               <h3>Request</h3>
-               <p>No Parameters required.</p>
-               <h3>Response (200 OK)</h3>
-               <pre>
-                   <code>
-                       [{
-                           "id": 1,
-                           "name": "Jon Jones",
-                           "gender": "Male",
-                           "price": 5000,
-                           "image": "images/athletes/Jones2.png",
-                           "purchaseStatus": false
-                       }]
-                   </code>
-               </pre>
-               <h3>Error response</h3>
-               <ul>
-                   <li>500 - Interntal Server Error</li>
-               </ul>
-           </article>
-
-
-           <!--Get /athlete(id)-->
-           <article>
-               <h3>GET /athlete/{id}</h3>
-               <p>Return a single athlete by ID</p>
-              
-               <h3>Path parameter</h3>
-               <p><strong>id</strong> - Athlete ID</p>
-
-
-               <h3>Response (200 OK)</h3>
-               <pre>
-                   <code>
-                       {
-                           "id": 1,
-                           "name": "Jon Jones",
-                           "gender": "Male",
-                           "price": 5000,
-                           "image": "images/athletes/Jones2.png",
-                           "purchaseStatus": false
-                       }
-                   </code>
-               </pre>
-
-
-               <h3>Error responses</h3>
-               <ul>
-                   <li>404 - Athlete not found</li>
-                   <li>500 - Internal Server Error</li>
-               </ul>
-           </article>
-          
-           <!--POST /athlete-->
-           <article>
-               <h3>POST /athlete</h3>
-               <p>Creates a new athlete</p>
-
-
-               <h3>Request body</h3>
-               <pre>
-                   <code>
-                       {
-                           "name": "Alex Pereira",
-                           "gender": "Male",
-                           "price": 4500,
-                           "image": "images/athletes/Pereira.png",
-                           "purchaseStatus": false
-                       }
-                   </code>
-               </pre>
-
-
-               <h3>Error responses</h3>
-               <ul>
-                   <li>400 - Bad Request</li>
-                   <li>500 - Internal Server Error</li>
-               </ul>
-           </article>
-
-
-           <!--PUT /athlete-->
-           <article>
-               <h2>PUT /athlete</h2>
-               <p>Updates an existing athlete. Use when editing an athlete or when an athlete is purchased.</p>
-
-
-               <h3>Request body</h3>
-               <pre>
-                   <code>
-                       {
-                           "id": 1,
-                           "name": "Jon Jones",
-                           "gender": "Male",
-                           "price": 5000,
-                           "image": "images/athletes/Jones2.png",
-                           "purchaseStatus": false
-                       }
-                   </code>
-               </pre>
-
-
-               <h3>Response</h3>
-               <ul>
-                   <li>204 - No Content (success)</li>
-               </ul>
-
-
-               <h3>Error responses</h3>
-               <ul>
-                   <li>400 - Bad Request</li>
-                   <li>500 - Internal Servier Error</li>
-               </ul>
-           </article>
-
-
-           <!--DELETE /athlete(id)-->
-           <article>
-               <h2>DELETE /athlete(id)</h2>
-               <p>Removes athlete from the database using provided athlete ID.</p>
-
-
-               <h3>Path parameter</h3>
-               <ul>
-                   <li><strong>id</strong> - Athlete ID(number)</li>
-               </ul>
-
-
-               <h3>Example request</h3>
-               <pre>
-                   <code>
-                       DELETE http://localhost:5177/athlete/3
-                   </code>
-               </pre>
-
-
-               <h3>Response</h3>
-               <ul>
-                   <li>204 - No Content (deleted successfully)</li>
-               </ul>
-
-
-               <h3>Error responses</h3>
-               <ul>
-                   <li>404 - Could not find athlete to delete</li>
-                   <li>500 - Internal Server error</li>
-               </ul>
-           </article>
-
-
-           <!--HTTP status codes for athleteAPI-->
-           <article>
-               <h2>HTTP Status Codes For Athlete API</h2>
-               <ul>
-                   <li><strong>200</strong> - OK</li>
-                   <li><strong>201</strong> - Created</li>
-                   <li><strong>204</strong> - No Content</li>
-                   <li><strong>400</strong> - Bad Request</li>
-                   <li><strong>404</strong> - Not Found</li>
-                   <li><strong>500</strong> - Internal Server Error</li>
-               </ul>
-           </article>
-      
-       </section>
-
-
-       <!--Finance API section-->
-       <section>
-           <h2>Finance API</h2>
-           <p>This API updates data such as budget and purchase values</p>
-
-
-           <!--Finance Base URL-->
-           <article>
-               <h2>Base URL</h2>
-               <code>http://localhost:5177/finance</code>
-           </article>
-
-
-           <!--Finance Model-->
-           <article>
-               <h2>Finance Model</h2>
-               <pre>
-                   <code>
-                       "id": number,
-                       "moneyLeft": number,
-                       "moneySpent": number,
-                       "numberOfPurchases": number
-                   </code>
-               </pre>
-           </article>
-
-
-           <!--Get /finance-->
-           <article>
-               <h2>Get /finance</h2>
-               <p>Returns a list of all finance records.</p>
-
-
-               <h3>Response (200 OK)</h3>
-               <pre>
-                   <code>
-                       [
-                           {
-                               "id": 1,
-                               "moneyLeft": 25000,
-                               "moneySpent": 5000,
-                               "numberOfPurchases": 2
-                           }
-                       ]
-                   </code>
-               </pre>
-
-
-               <!--Trenger dobbelt sjekk på dette! -->
-
-
-               <h3>Error Responses</h3>
-               <ul>
-                   <li>404 - Server side exception</li>
-                   <li>500 - Database side exception</li>
-               </ul>
-           </article>
-
-
-           <!--Get finance-->
-
-
-           <article>
-               <h2>GET /finance/{id}</h2>
-               <p>Returns finance data for the specific ID.</p>
-
-
-               <h3>Path parameter</h3>
-               <ul>
-                   <li><Strong>id</Strong> - Finance ID (number)</li>
-               </ul>
-
-
-               <h3>Response (200 OK)</h3>
-               <pre>
-                   <code>
-                       {
-                           "id": 1,
-                           "moneyLeft": 25000,
-                           "moneySpent": 5000,
-                           "numberOfPurchases": 2
-                       }
-                   </code>
-               </pre>
-
-
-               <h3>Error Responses</h3>
-               <ul>
-                   <li>404 - Finance record not found</li>
-                   <li>500 - Database or server exception</li>
-               </ul>
-           </article>
-          
-               <!--PUT finance-->
-           <article>
-               <h2>PUT /finance</h2>
-               <p>
-                   Updates financial data such as <strong>moneyLeft</strong>,
-                   <strong>moneySpent</strong> and <strong>numberOfPurchases.</strong>
-               </p>
-
-
-               <h3>Request body</h3>
-               <pre>
-                   <code>
-                       "id": 1,
-                       "moneyLeft": 25000,
-                       "moneySpent": 5000,
-                       "numberOfPurchases": 2
-                   </code>
-               </pre>
-
-
-               <h3>Response</h3>
-               <ul>
-                   <li>204 - No Content (update successful)</li>
-               </ul>
-
-
-               <h3>Error Response</h3>
-               <ul>
-                   <li>500 - Database or server exception</li>
-               </ul>
-           </article>
-
-
-           <!--Post Finance-->
-           <article>
-               <h2>POST /finance</h2>
-               <p>Creates an new finance entry</p>
-
-
-               <h3>Request body</h3>
-               <pre>
-                   <code>
-                       {
-                           "moneyLeft": 20000000,
-                           "moneySpent": 3000,
-                           "numberOfPurchases": 2
-                       }
-                   </code>
-               </pre>
-
-
-               <h3>Response</h3>
-               <ul>
-                   <li>201 - Created</li>
-               </ul>
-
-
-               <h3>Error responses</h3>
-               <ul>
-                   <li>500 - Database or server error</li>
-               </ul>
-           </article>
-
-
-           <!--DELETE /finance(id)-->
-           <article>
-               <h2>DELETE /finance?id={id}</h2>
-               <p>Deletes the finance record with the specified ID.</p>
-
-
-               <h3>Path parameter</h3>
-               <ul>
-                   <li><strong>id</strong> -  Finance ID (number)</li>
-               </ul>
-
-
-               <h3>Response</h3>
-               <ul>
-                   <li>204 - No Content (deleted successfully)</li>
-               </ul>
-
-
-               <h3>Error responses</h3>
-               <ul>
-                   <li>404 - Finance record not found</li>
-                   <li>500 - Server exception</li>
-               </ul>
-           </article>
-
-
-           <!--HTTP Status Code for FinanceAPI-->
-           <article>
-               <h2>HTTP Status Code (FinanceAPI)</h2>
-               <ul>
-                   <li><strong>200</strong> - OK</li>
-                   <li><strong>201</strong> - Created</li>
-                   <li><strong>204</strong> - No Content</li>
-                   <li><strong>404</strong> - Not Found</li>
-                   <li><strong>500</strong> - Internal Server Error</li>
-               </ul>
-
-
-               <p>
-                   NOTE: Not all the endpoints return all status codes.
-                   Responses depends on controller logic and database state.
-               </p>
-           </article>
-       </section>
-
-
-       <!--ImageUpload Controller API-->
-       <section>
-           <h2>POST /imageupload</h2>
-           <p>Uploads an image file and saves it to a category folder under <code>wwwroot/images</code>.</p>
-
-
-           <h3>Descrption</h3>
-           <p>
-               Uploads an image to a category folder. If the folder does not exist, it will be created automatically.
-               The API saves the image with a unique filename and returns the relative path to the file.
-           </p>
-
-
-           <h3>Request</h3>
-           <p>The request must be sent as: <strong>multipart/form-data</strong>.</p>
-
-
-           <h3>Example request</h3>
-           <pre>
-               <code>
-                   POST http://localhost:5177/imageupload
-                   Content-Type: multipart/form-data
-
-
-                   file: athlete1.png
-                   category: athletes
-               </code>
-           </pre>
-
-
-           <h3>Successful Response (201 Created)</h3>
-           <p>API return an object containing the stored image path.</p>
-           <pre>
-               <code>
-                   {
-                       "path": "images/athletes/2f0c2c7a-7d16-4d0a-9dbf-6a4f5b2db1a3.png"
-                   }
-               </code>
-           </pre>
-
-
-           <h3>Error responses</h3>
-           <ul>
-               <li><strong>400</strong> - Bad Request (No file uploaded)</li>
-               <li><strong>500</strong> - Internal Server Error (Something went wrong with the POST-request)</li>
-           </ul>
-
-
-           <h3>Notes</h3>
-           <ul>
-               <li>
-                   Each uploaded file is given a unique filename to prevent files from overwriting each other.
-               </li>
-               <li>
-                   Images are stored in <code>/images{category}/</code> and can be accessed directly by the application.
-               </li>
-               <li>
-                   The returned file path can be saved in the database and later used by the frontend to display the image.
-               </li>
-           </ul>
-       </section>
-
-
-       <!--Venue API section-->
-       <section>
-           <h2>Venue API</h2>
-           <p>
-               Venue API is used to manage venues in the Sportsworld application.
-               It allows the users to retrieve, create, update and delete venues.
-           </p>
-
-
-           <!--VenueAPI BaseURL-->
-           <article>
-               <h2>Venue API Base URL</h2>
-               <code>http://localhost:5177/venue</code>
-           </article>
-
-
-           <article>
-               <h2>Venue Model</h2>
-               <pre>
-                   <code>
-                       {
-                           "id": number,
-                           "name": string,
-                           "location": string,
-                           "capacity": number
-                       }
-                   </code>
-               </pre>
-           </article>
-
-
-           <!--GET /venue-->
-           <article>
-               <h2>GET /venue</h3>
-               <p>Returns a list of all venues.</p>
-
-
-               <h3>Response (200 OK)</h3>
-               <pre>
-                   <code>
-                       [
-                           {
-                               "id": 1,
-                               "name": "Madison Square Garden",
-                               "location": "New York",
-                               "capacity": 20000
-                           }
-                       ]
-                   </code>
-               </pre>
-
-
-               <h3>Error Responses</h3>
-               <ul>
-                   <li>500 - Database or server exception</li>
-               </ul>
-           </article>
-
-
-           <!-- GET BY ID /venue/{id}-->
-           <article>
-               <h2>GET /venue{id}</h2>
-               <p>Returns a single venue by its ID.</p>
-
-
-               <h3>Path parameter</h3>
-               <ul>
-                   <li><strong>id</strong> - Venue ID (number) </li>
-               </ul>
-
-
-               <h3>Response (200 OK)</h3>
-               <pre>
-                   <code>
-                       {
-                           "id": 1,
-                           "name": "Madison Square Garden",
-                           "location": "New York",
-                           "capacity": 20000
-                       }
-                   </code>
-               </pre>
-
-
-               <h3>Error Responses</h3>
-               <ul>
-                   <li>404 - Could not find a venue with that ID</li>
-                   <li>Internal server error</li>
-               </ul>
-           </article>
-
-
-           <!--POST /venue-->
-           <article>
-               <h2>POST /venue</h2>
-               <p>Creates a new venue</p>
-
-
-               <h3>Request body</h3>
-               <pre>
-                   <code>
-                       {
-                           "name": "T-Mobile Arena",
-                           "location": "Las Vegas",
-                           "capacity": 18000
-                       }
-                   </code>
-               </pre>
-
-
-               <h3>Response (201 Created)</h3>
-               <pre>
-                   <code>
-                       {
-                           "id": 3,
-                           "name": "T-Mobile Arena",
-                           "location": "Las Vegas",
-                           "capacity": 23000
-                       }
-                   </code>
-               </pre>
-
-
-               <h3>Error Responses</h3>
-               <ul>
-                   <li>500 - Internal server error</li>
-               </ul>
-           </article>
-
-
-           <!--PUT /venue-->
-           <article>
-               <h2>PUT /venue/{id}</h2>
-               <p>Updates an existing venue by ID.</p>
-
-
-               <h3>Path parameter</h3>
-               <ul>
-                   <li><strong>id</strong> - Venue ID</li>
-               </ul>
-
-
-               <h3>Request body</h3>
-               <pre>
-                   <code>
-                       {
-                           "id": 3,
-                           "name": "T-Mobile Arena",
-                           "location": "Las Vegas",
-                           "capacity": 23000
-                       }
-                   </code>
-               </pre>
-
-
-               <h3>Response</h3>
-               <ul>
-                   <li>204 - No Content (updated successful)</li>
-               </ul>
-
-
-               <h3>Error responses</h3>
-               <ul>
-                   <li>400 - Id mismatch</li>
-                   <li>500 - Internal server error</li>
-               </ul>
-           </article>
-
-
-           <!--DELETE /venue/{id}-->
-           <article>
-               <h2>DELETE /venue{id}</h2>
-               <p>Deletes a venue by ID.</p>
-
-
-               <h3>Path parameter</h3>
-               <ul>
-                   <li><strong>id</strong> - Venue ID (number)</li>
-               </ul>
-
-
-               <h3>Response</h3>
-               <ul>
-                   <li>
-                       204 - No Content (deleted succesfully)
-                   </li>
-               </ul>
-
-
-               <h3>Error Responses</h3>
-               <ul>
-                   <li>404 - Venue not found</li>
-                   <li> 500 - Internal server error</li>
-               </ul>
-           </article>
-       </section>
-   </main>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sportsworld API</title>
+    <link rel="stylesheet" href="./css/main.css" />
+  </head>
+  <body>
+    <header>
+      <h1 id="main-title">Sportsworld API Documentation</h1>
+      <nav>
+        <ul>
+          <li><a href="#athlete-api-section">Athlete API</a></li>
+          <li><a href="#finance-api-section">Finance API</a></li>
+          <li><a href="#image-upload-section">Image Upload</a></li>
+          <li><a href="#venue-api-section">Venue API</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Athlete API section -->
+      <section id="athlete-api-section">
+        <h1>Athlete API</h1>
+        <p>
+          This API handles athletes in the Sportsworld application.
+          <br />
+          The API supports retrieving, creating updating and deleting athletes.
+        </p>
+
+        <article>
+          <h2>Base URL</h2>
+          <p>http://localhost:5177/athlete</p>
+        </article>
+
+        <article>
+          <h2>Athlete Model</h2>
+          <ul>
+            <li><strong>id</strong>: number</li>
+            <li><strong>name</strong>: string</li>
+            <li><strong>gender</strong>: string</li>
+            <li><strong>price</strong>: number</li>
+            <li><strong>image</strong>: string</li>
+            <li><strong>purchaseStatus</strong>: boolean</li>
+          </ul>
+        </article>
+
+        <article>
+          <h2>GET /athlete</h2>
+          <p>Returns a list of all athletes</p>
+
+          <h3>Request</h3>
+          <p>No Parameters required.</p>
+
+          <h3>Response (200 OK)</h3>
+          <div>
+            <p>[</p>
+            <p>&nbsp;&nbsp;{</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;"id": 1,</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;"name": "Jon Jones",</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;"gender": "Male",</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;"price": 5000,</p>
+            <p>
+              &nbsp;&nbsp;&nbsp;&nbsp;"image": "images/athletes/Jones2.png",
+            </p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;"purchaseStatus": false</p>
+            <p>&nbsp;&nbsp;}</p>
+            <p>]</p>
+          </div>
+
+          <h3>Error response</h3>
+          <ul>
+            <li>500 - Interntal Server Error</li>
+          </ul>
+        </article>
+
+        <article>
+          <h3>GET /athlete/{id}</h3>
+          <p>Return a single athlete by ID</p>
+
+          <h3>Path parameter</h3>
+          <p><strong>id</strong> - Athlete ID</p>
+
+          <h3>Response (200 OK)</h3>
+          <div>
+            <p>{</p>
+            <p>&nbsp;&nbsp;"id": 1,</p>
+            <p>&nbsp;&nbsp;"name": "Jon Jones",</p>
+            <p>&nbsp;&nbsp;"gender": "Male",</p>
+            <p>&nbsp;&nbsp;"price": 5000,</p>
+            <p>&nbsp;&nbsp;"image": "images/athletes/Jones2.png",</p>
+            <p>&nbsp;&nbsp;"purchaseStatus": false</p>
+            <p>}</p>
+          </div>
+
+          <h3>Error responses</h3>
+          <ul>
+            <li>404 - Athlete not found</li>
+            <li>500 - Internal Server Error</li>
+          </ul>
+        </article>
+
+        <article>
+          <h3>POST /athlete</h3>
+          <p>Creates a new athlete</p>
+
+          <h3>Request body</h3>
+          <div>
+            <p>{</p>
+            <p>&nbsp;&nbsp;"name": "Alex Pereira",</p>
+            <p>&nbsp;&nbsp;"gender": "Male",</p>
+            <p>&nbsp;&nbsp;"price": 4500,</p>
+            <p>&nbsp;&nbsp;"image": "images/athletes/Pereira.png",</p>
+            <p>&nbsp;&nbsp;"purchaseStatus": false</p>
+            <p>}</p>
+          </div>
+
+          <h3>Error responses</h3>
+          <ul>
+            <li>400 - Bad Request</li>
+            <li>500 - Internal Server Error</li>
+          </ul>
+        </article>
+
+        <article>
+          <h2>PUT /athlete</h2>
+          <p>
+            Updates an existing athlete. Use when editing an athlete or when an
+            athlete is purchased.
+          </p>
+
+          <h3>Request body</h3>
+          <div>
+            <p>{</p>
+            <p>&nbsp;&nbsp;"id": 1,</p>
+            <p>&nbsp;&nbsp;"name": "Jon Jones",</p>
+            <p>&nbsp;&nbsp;"gender": "Male",</p>
+            <p>&nbsp;&nbsp;"price": 5000,</p>
+            <p>&nbsp;&nbsp;"image": "images/athletes/Jones2.png",</p>
+            <p>&nbsp;&nbsp;"purchaseStatus": false</p>
+            <p>}</p>
+          </div>
+
+          <h3>Response</h3>
+          <ul>
+            <li>204 - No Content (success)</li>
+          </ul>
+
+          <h3>Error responses</h3>
+          <ul>
+            <li>400 - Bad Request</li>
+            <li>500 - Internal Servier Error</li>
+          </ul>
+        </article>
+
+        <article>
+          <h2>DELETE /athlete(id)</h2>
+          <p>Removes athlete from the database using provided athlete ID.</p>
+
+          <h3>Path parameter</h3>
+          <ul>
+            <li><strong>id</strong> - Athlete ID(number)</li>
+          </ul>
+
+          <h3>Example request</h3>
+          <p>DELETE http://localhost:5177/athlete/3</p>
+
+          <h3>Response</h3>
+          <ul>
+            <li>204 - No Content (deleted successfully)</li>
+          </ul>
+
+          <h3>Error responses</h3>
+          <ul>
+            <li>404 - Could not find athlete to delete</li>
+            <li>500 - Internal Server error</li>
+          </ul>
+        </article>
+
+        <article>
+          <h2>HTTP Status Codes For Athlete API</h2>
+          <ul>
+            <li><strong>200</strong> - OK</li>
+            <li><strong>201</strong> - Created</li>
+            <li><strong>204</strong> - No Content</li>
+            <li><strong>400</strong> - Bad Request</li>
+            <li><strong>404</strong> - Not Found</li>
+            <li><strong>500</strong> - Internal Server Error</li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- Finance API section -->
+      <section id="finance-api-section">
+        <h1>Finance API</h1>
+        <p>This API updates data such as budget and purchase values</p>
+
+        <article>
+          <h2>Base URL</h2>
+          <p>http://localhost:5177/finance</p>
+        </article>
+
+        <article>
+          <h2>Finance Model</h2>
+          <ul>
+            <li><strong>id</strong>: number</li>
+            <li><strong>moneyLeft</strong>: number</li>
+            <li><strong>moneySpent</strong>: number</li>
+            <li><strong>numberOfPurchases</strong>: number</li>
+          </ul>
+        </article>
+
+        <article>
+          <h2>Get /finance</h2>
+          <p>Returns a list of all finance records.</p>
+
+          <h3>Response (200 OK)</h3>
+          <div>
+            <p>[</p>
+            <p>&nbsp;&nbsp;{</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;"id": 1,</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;"moneyLeft": 25000,</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;"moneySpent": 5000,</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;"numberOfPurchases": 2</p>
+            <p>&nbsp;&nbsp;}</p>
+            <p>]</p>
+          </div>
+
+          <h3>Error Responses</h3>
+          <ul>
+            <li>404 - Server side exception</li>
+            <li>500 - Database side exception</li>
+          </ul>
+        </article>
+
+        <article>
+          <h2>GET /finance/{id}</h2>
+          <p>Returns finance data for the specific ID.</p>
+
+          <h3>Path parameter</h3>
+          <ul>
+            <li><strong>id</strong> - Finance ID (number)</li>
+          </ul>
+
+          <h3>Response (200 OK)</h3>
+          <div>
+            <p>{</p>
+            <p>&nbsp;&nbsp;"id": 1,</p>
+            <p>&nbsp;&nbsp;"moneyLeft": 25000,</p>
+            <p>&nbsp;&nbsp;"moneySpent": 5000,</p>
+            <p>&nbsp;&nbsp;"numberOfPurchases": 2</p>
+            <p>}</p>
+          </div>
+
+          <h3>Error Responses</h3>
+          <ul>
+            <li>404 - Finance record not found</li>
+            <li>500 - Database or server exception</li>
+          </ul>
+        </article>
+
+        <article>
+          <h2>PUT /finance</h2>
+          <p>
+            Updates financial data such as <strong>moneyLeft</strong>,
+            <strong>moneySpent</strong> and <strong>numberOfPurchases.</strong>
+          </p>
+
+          <h3>Request body</h3>
+          <div>
+            <p>{</p>
+            <p>&nbsp;&nbsp;"id": 1,</p>
+            <p>&nbsp;&nbsp;"moneyLeft": 25000,</p>
+            <p>&nbsp;&nbsp;"moneySpent": 5000,</p>
+            <p>&nbsp;&nbsp;"numberOfPurchases": 2</p>
+            <p>}</p>
+          </div>
+
+          <h3>Response</h3>
+          <ul>
+            <li>204 - No Content (update successful)</li>
+          </ul>
+
+          <h3>Error Response</h3>
+          <ul>
+            <li>500 - Database or server exception</li>
+          </ul>
+        </article>
+
+        <article>
+          <h2>POST /finance</h2>
+          <p>Creates an new finance entry</p>
+
+          <h3>Request body</h3>
+          <div>
+            <p>{</p>
+            <p>&nbsp;&nbsp;"moneyLeft": 20000000,</p>
+            <p>&nbsp;&nbsp;"moneySpent": 3000,</p>
+            <p>&nbsp;&nbsp;"numberOfPurchases": 2</p>
+            <p>}</p>
+          </div>
+
+          <h3>Response</h3>
+          <ul>
+            <li>201 - Created</li>
+          </ul>
+
+          <h3>Error responses</h3>
+          <ul>
+            <li>500 - Database or server error</li>
+          </ul>
+        </article>
+
+        <article>
+          <h2>DELETE /finance?id={id}</h2>
+          <p>Deletes the finance record with the specified ID.</p>
+
+          <h3>Path parameter</h3>
+          <ul>
+            <li><strong>id</strong> - Finance ID (number)</li>
+          </ul>
+
+          <h3>Response</h3>
+          <ul>
+            <li>204 - No Content (deleted successfully)</li>
+          </ul>
+
+          <h3>Error responses</h3>
+          <ul>
+            <li>404 - Finance record not found</li>
+            <li>500 - Server exception</li>
+          </ul>
+        </article>
+
+        <article>
+          <h2>HTTP Status Code (FinanceAPI)</h2>
+          <ul>
+            <li><strong>200</strong> - OK</li>
+            <li><strong>201</strong> - Created</li>
+            <li><strong>204</strong> - No Content</li>
+            <li><strong>404</strong> - Not Found</li>
+            <li><strong>500</strong> - Internal Server Error</li>
+          </ul>
+
+          <p>
+            NOTE: Not all the endpoints return all status codes. Responses
+            depends on controller logic and database state.
+          </p>
+        </article>
+      </section>
+
+      <!-- ImageUpload Controller API -->
+      <section id="image-upload-section">
+        <h1>POST /imageupload</h1>
+        <p>
+          Uploads an image file and saves it to a category folder under
+          <strong>wwwroot/images</strong>.
+        </p>
+
+        <h3>Description</h3>
+        <p>
+          Uploads an image to a category folder. If the folder does not exist,
+          it will be created automatically. The API saves the image with a
+          unique filename and returns the relative path to the file.
+        </p>
+
+        <h3>Request</h3>
+        <p>
+          The request must be sent as: <strong>multipart/form-data</strong>.
+        </p>
+
+        <h3>Example request</h3>
+        <div>
+          <p>POST http://localhost:5177/imageupload</p>
+          <p>Content-Type: multipart/form-data</p>
+          <p>file: athlete1.png</p>
+          <p>category: athletes</p>
+        </div>
+
+        <h3>Successful Response (201 Created)</h3>
+        <p>API returns an object containing the stored image path.</p>
+        <div>
+          <p>{</p>
+          <p>
+            &nbsp;&nbsp;"path":
+            "images/athletes/2f0c2c7a-7d16-4d0a-9dbf-6a4f5b2db1a3.png"
+          </p>
+          <p>}</p>
+        </div>
+
+        <h3>Error responses</h3>
+        <ul>
+          <li><strong>400</strong> - Bad Request (No file uploaded)</li>
+          <li>
+            <strong>500</strong> - Internal Server Error (Something went wrong
+            with the POST-request)
+          </li>
+        </ul>
+
+        <h3>Notes</h3>
+        <ul>
+          <li>
+            Each uploaded file is given a unique filename to prevent
+            overwriting.
+          </li>
+          <li>
+            Images are stored in /images/{category}/ and can be accessed
+            directly.
+          </li>
+          <li>
+            The returned path can be saved in the database and used by the
+            frontend.
+          </li>
+        </ul>
+      </section>
+
+      <!-- Venue API section -->
+      <section id="venue-api-section">
+        <h1>Venue API</h1>
+        <p>
+          Venue API is used to manage venues in the Sportsworld application. It
+          allows the users to retrieve, create, update and delete venues.
+        </p>
+
+        <article>
+          <h2>Venue API Base URL</h2>
+          <p>http://localhost:5177/venue</p>
+        </article>
+
+        <article>
+          <h2>Venue Model</h2>
+          <ul>
+            <li><strong>id</strong>: number</li>
+            <li><strong>name</strong>: string</li>
+            <li><strong>location</strong>: string</li>
+            <li><strong>capacity</strong>: number</li>
+          </ul>
+        </article>
+
+        <article>
+          <h2>GET /venue</h2>
+          <p>Returns a list of all venues.</p>
+
+          <h3>Response (200 OK)</h3>
+          <div>
+            <p>[</p>
+            <p>&nbsp;&nbsp;{</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;"id": 1,</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;"name": "Madison Square Garden",</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;"location": "New York",</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;"capacity": 20000</p>
+            <p>&nbsp;&nbsp;}</p>
+            <p>]</p>
+          </div>
+
+          <h3>Error Responses</h3>
+          <ul>
+            <li>500 - Database or server exception</li>
+          </ul>
+        </article>
+
+        <article>
+          <h2>GET /venue/{id}</h2>
+          <p>Returns a single venue by its ID.</p>
+
+          <h3>Path parameter</h3>
+          <ul>
+            <li><strong>id</strong> - Venue ID (number)</li>
+          </ul>
+
+          <h3>Response (200 OK)</h3>
+          <div>
+            <p>{</p>
+            <p>&nbsp;&nbsp;"id": 1,</p>
+            <p>&nbsp;&nbsp;"name": "Madison Square Garden",</p>
+            <p>&nbsp;&nbsp;"location": "New York",</p>
+            <p>&nbsp;&nbsp;"capacity": 20000</p>
+            <p>}</p>
+          </div>
+
+          <h3>Error Responses</h3>
+          <ul>
+            <li>404 - Could not find a venue with that ID</li>
+            <li>500 - Internal server error</li>
+          </ul>
+        </article>
+
+        <article>
+          <h2>POST /venue</h2>
+          <p>Creates a new venue</p>
+
+          <h3>Request body</h3>
+          <div>
+            <p>{</p>
+            <p>&nbsp;&nbsp;"name": "T-Mobile Arena",</p>
+            <p>&nbsp;&nbsp;"location": "Las Vegas",</p>
+            <p>&nbsp;&nbsp;"capacity": 18000</p>
+            <p>}</p>
+          </div>
+
+          <h3>Response (201 Created)</h3>
+          <div>
+            <p>{</p>
+            <p>&nbsp;&nbsp;"id": 3,</p>
+            <p>&nbsp;&nbsp;"name": "T-Mobile Arena",</p>
+            <p>&nbsp;&nbsp;"location": "Las Vegas",</p>
+            <p>&nbsp;&nbsp;"capacity": 23000</p>
+            <p>}</p>
+          </div>
+
+          <h3>Error Responses</h3>
+          <ul>
+            <li>500 - Internal server error</li>
+          </ul>
+        </article>
+
+        <article>
+          <h2>PUT /venue/{id}</h2>
+          <p>Updates an existing venue by ID.</p>
+
+          <h3>Path parameter</h3>
+          <ul>
+            <li><strong>id</strong> - Venue ID</li>
+          </ul>
+
+          <h3>Request body</h3>
+          <div>
+            <p>{</p>
+            <p>&nbsp;&nbsp;"id": 3,</p>
+            <p>&nbsp;&nbsp;"name": "T-Mobile Arena",</p>
+            <p>&nbsp;&nbsp;"location": "Las Vegas",</p>
+            <p>&nbsp;&nbsp;"capacity": 23000</p>
+            <p>}</p>
+          </div>
+
+          <h3>Response</h3>
+          <ul>
+            <li>204 - No Content (updated successful)</li>
+          </ul>
+
+          <h3>Error responses</h3>
+          <ul>
+            <li>400 - Id mismatch</li>
+            <li>500 - Internal server error</li>
+          </ul>
+        </article>
+
+        <article>
+          <h2>DELETE /venue/{id}</h2>
+          <p>Deletes a venue by ID.</p>
+
+          <h3>Path parameter</h3>
+          <ul>
+            <li><strong>id</strong> - Venue ID (number)</li>
+          </ul>
+
+          <h3>Response</h3>
+          <ul>
+            <li>204 - No Content (deleted succesfully)</li>
+          </ul>
+
+          <h3>Error Responses</h3>
+          <ul>
+            <li>404 - Venue not found</li>
+            <li>500 - Internal server error</li>
+          </ul>
+        </article>
+      </section>
+    </main>
+  </body>
 </html>
-
